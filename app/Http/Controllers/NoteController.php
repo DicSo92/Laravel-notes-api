@@ -40,9 +40,9 @@ class NoteController extends ApiController
             $result['message'] = 'Operation failed due to : '. $e->getMessage();
         }
 
-        if($result['status']){
+        if ($result['status']) {
             return $this->success($result['data']);
-        }else{
+        } else{
             return $this->fail($result['message']);
         }
     }
