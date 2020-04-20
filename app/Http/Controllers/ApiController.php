@@ -18,7 +18,7 @@ class ApiController extends Controller
         return response()->json([
             'status' => 'failure',
             'status_code' => $code,
-            'message' => $message ? $message : 'Internal Server Error',
+            'error' => $message ? $message : 'Internal Server Error',
             'errors' => $errors,
         ], isset(JsonResponse::$statusTexts[$code]) ? $code : JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
     }
@@ -51,7 +51,7 @@ class ApiController extends Controller
         return response()->json([
             'status' => 'Bad Request',
             'status_code' => $code,
-            'message' => $message ? $message : 'Bad Request',
+            'error' => $message ? $message : 'Bad Request',
         ], isset(JsonResponse::$statusTexts[$code]) ? $code : JsonResponse::HTTP_BAD_REQUEST);
     }
 
@@ -66,7 +66,7 @@ class ApiController extends Controller
         return response()->json([
             'status' => 'Not Found',
             'status_code' => $code,
-            'message' => $message ? $message : 'Not Found',
+            'error' => $message ? $message : 'Not Found',
         ], isset(JsonResponse::$statusTexts[$code]) ? $code : JsonResponse::HTTP_NOT_FOUND);
     }
 
@@ -81,7 +81,7 @@ class ApiController extends Controller
         return response()->json([
             'status' => 'Forbidden',
             'status_code' => $code,
-            'message' => $message ? $message : 'Forbidden',
+            'error' => $message ? $message : 'Forbidden',
         ], isset(JsonResponse::$statusTexts[$code]) ? $code : JsonResponse::HTTP_FORBIDDEN);
     }
 
@@ -96,7 +96,7 @@ class ApiController extends Controller
         return response()->json([
             'status' => 'Unauthorized',
             'status_code' => $code,
-            'message' => $message ? $message : 'Unauthorized',
+            'error' => $message ? $message : 'Unauthorized',
         ], isset(JsonResponse::$statusTexts[$code]) ? $code : JsonResponse::HTTP_UNAUTHORIZED);
     }
 }
