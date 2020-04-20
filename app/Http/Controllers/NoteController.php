@@ -56,7 +56,6 @@ class NoteController extends ApiController
      */
     public function show($id)
     {
-//        $user = Note::findOrFail($id);
         $note = Note::find($id);
 
         if ($note) {
@@ -76,13 +75,14 @@ class NoteController extends ApiController
     public function update(Request $request, $id)
     {
         try {
-            //        $note = Note::findOrFail($id);
             $note = Note::find($id);
             if(!$note){
                 return $this->notFound('Note not found !');
             }
-            $note->content = $request->content;
-            $note->save();
+            $validatedData = $request->validate([
+                'content' => 'required|unique:notes|max:255',
+            ]);
+            $note->update($validatedData);
 
             $result['data'] = $note->toArray();
             $result['status'] = true;
