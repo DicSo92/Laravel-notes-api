@@ -38911,7 +38911,7 @@ var render = function() {
               }
             },
             [
-              _c("h6", { staticClass: "font-bold" }, [
+              _c("h6", { staticClass: "font-bold text-gray-800" }, [
                 _vm._v(_vm._s(_vm._f("moment")(note.updated_at, "calendar")))
               ]),
               _vm._v(" "),

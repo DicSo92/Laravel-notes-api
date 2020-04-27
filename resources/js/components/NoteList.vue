@@ -7,7 +7,7 @@
                  :key="note.id"
                  :class="noteEdit && note.id === noteEdit.id ? 'bg-orange-300 hover:bg-orange-400' : ''"
                  @click="showNote(note)">
-                <h6 class="font-bold">{{ note.updated_at | moment("calendar") }}</h6>
+                <h6 class="font-bold text-gray-800">{{ note.updated_at | moment("calendar") }}</h6>
                 <p>{{note.content}}</p>
 
                 <button class="bg-transparent hover:bg-red-500 font-semibold hover:text-white p-1 border border-red-600 hover:border-transparent rounded-full trashBtn"
