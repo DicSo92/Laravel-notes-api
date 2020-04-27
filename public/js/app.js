@@ -2019,10 +2019,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   watch: {
     textContent: function textContent(newData, oldData) {
-      this.$bus.$emit("loaderDebounceRemove");
-      this.debouncedLoader();
-
       if (!this.first) {
+        this.$bus.$emit("loaderDebounceRemove");
+        this.debouncedLoader();
+
         if (newData.length > 1) {
           console.log("J'attends que vous arrêtiez de taper...");
           this.loading = true;
@@ -2230,6 +2230,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2271,6 +2280,12 @@ __webpack_require__.r(__webpack_exports__);
     },
     notes: function notes() {
       return this.$store.state.notes;
+    },
+    loading: function loading() {
+      return this.$store.state.loading;
+    },
+    loadingText: function loadingText() {
+      return this.$store.state.loadingText;
     }
   },
   methods: {
@@ -6865,7 +6880,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".notes {\n  height: 90vh;\n}\n.notesList {\n  border-right: solid #dddddd 2px;\n}\n.addBtn {\n  position: absolute;\n  top: 10px;\n  right: 10px;\n}\n.addSvg {\n  width: 17px;\n  height: auto;\n  fill: #3182ce;\n}\n.addBtn:hover .addSvg {\n  fill: white;\n}\n.loaderDebounce {\n  height: 2px;\n  width: 0;\n  background-color: blue;\n}\n.loaderTransition {\n  -webkit-animation: linear loaderDeb 1.8s;\n          animation: linear loaderDeb 1.8s;\n}\n@-webkit-keyframes loaderDeb {\n0% {\n    width: 0;\n}\n100% {\n    width: 100%;\n}\n}\n@keyframes loaderDeb {\n0% {\n    width: 0;\n}\n100% {\n    width: 100%;\n}\n}", ""]);
+exports.push([module.i, ".notes {\n  height: 90vh;\n}\n.notesList {\n  border-right: solid #dddddd 2px;\n}\n.addBtn {\n  position: absolute;\n  top: 10px;\n  right: 10px;\n}\n.addSvg {\n  width: 17px;\n  height: auto;\n  fill: #3182ce;\n}\n.addBtn:hover .addSvg {\n  fill: white;\n}\n.loaderDebounce {\n  height: 2px;\n  width: 0;\n  background-color: blue;\n}\n.loaderTransition {\n  -webkit-animation: linear loaderDeb 1.8s;\n          animation: linear loaderDeb 1.8s;\n}\n@-webkit-keyframes loaderDeb {\n0% {\n    width: 0;\n}\n100% {\n    width: 100%;\n}\n}\n@keyframes loaderDeb {\n0% {\n    width: 0;\n}\n100% {\n    width: 100%;\n}\n}\n.loaderUploadContainer {\n  position: absolute;\n  transform: translateY(-50%);\n  top: 50%;\n  left: 0;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.lds-ring {\n  display: inline-block;\n  position: relative;\n  width: 20px;\n  height: 20px;\n  padding-top: 2px;\n}\n.lds-ring div {\n  box-sizing: border-box;\n  display: block;\n  position: absolute;\n  width: 16px;\n  height: 16px;\n  border: 2px solid #ed8936;\n  border-radius: 50%;\n  -webkit-animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;\n          animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;\n  border-color: #ed8936 transparent transparent transparent;\n}\n.lds-ring div:nth-child(1) {\n  -webkit-animation-delay: -0.45s;\n          animation-delay: -0.45s;\n}\n.lds-ring div:nth-child(2) {\n  -webkit-animation-delay: -0.3s;\n          animation-delay: -0.3s;\n}\n.lds-ring div:nth-child(3) {\n  -webkit-animation-delay: -0.15s;\n          animation-delay: -0.15s;\n}\n@-webkit-keyframes lds-ring {\n0% {\n    transform: rotate(0deg);\n}\n100% {\n    transform: rotate(360deg);\n}\n}\n@keyframes lds-ring {\n0% {\n    transform: rotate(0deg);\n}\n100% {\n    transform: rotate(360deg);\n}\n}", ""]);
 
 // exports
 
@@ -39112,6 +39127,28 @@ var render = function() {
                 ]
               )
             ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.loading,
+                  expression: "loading"
+                }
+              ],
+              staticClass: "loaderUploadContainer ml-3"
+            },
+            [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-orange-500 font-bold ml-1" }, [
+                _vm._v(_vm._s(_vm.loadingText) + "...")
+              ])
+            ]
           )
         ]),
         _vm._v(" "),
@@ -39125,7 +39162,22 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "lds-ring" }, [
+      _c("div"),
+      _vm._v(" "),
+      _c("div"),
+      _vm._v(" "),
+      _c("div"),
+      _vm._v(" "),
+      _c("div")
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -61752,7 +61804,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     status: 'new',
     first: true,
     noteEdit: null,
-    notes: null
+    notes: null,
+    loading: false,
+    loadingText: ''
   },
   mutations: {
     changeStatus: function changeStatus(state, val) {
@@ -61766,6 +61820,12 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     },
     changeNotes: function changeNotes(state, val) {
       state.notes = val;
+    },
+    toggleLoading: function toggleLoading(state, val) {
+      state.loading = !state.loading;
+    },
+    changeLoadingText: function changeLoadingText(state, val) {
+      state.loadingText = val;
     }
   },
   actions: {
@@ -61784,7 +61844,11 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
 
       var commit = _ref2.commit,
           dispatch = _ref2.dispatch;
+      commit('changeLoadingText', 'Deleting');
+      commit('toggleLoading');
       axios__WEBPACK_IMPORTED_MODULE_2___default.a["delete"]("/api/notes/".concat(id)).then(function (response) {
+        console.log(response);
+        commit('toggleLoading');
         vue__WEBPACK_IMPORTED_MODULE_0___default.a.notify({
           group: 'notif',
           title: 'Success !',
@@ -61799,6 +61863,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
         }
       })["catch"](function (error) {
         console.log(error);
+        commit('toggleLoading');
         vue__WEBPACK_IMPORTED_MODULE_0___default.a.notify({
           group: 'notif',
           title: 'Error, something went wrong !',
@@ -61811,6 +61876,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
       var commit = _ref3.commit,
           dispatch = _ref3.dispatch,
           state = _ref3.state;
+      commit('changeLoadingText', 'Uploading');
+      commit('toggleLoading');
 
       if (state.status === 'new') {
         axios__WEBPACK_IMPORTED_MODULE_2___default.a.post("/api/notes", {
@@ -61826,9 +61893,11 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
           commit('changeStatus', 'edit');
           commit('changeFirst', false);
           commit('changeNoteEdit', response.data.data);
+          commit('toggleLoading');
           dispatch('refreshNotes'); // this.$bus.$emit("refreshNotes") // Refresh notes
         })["catch"](function (error) {
           console.log(error);
+          commit('toggleLoading');
           vue__WEBPACK_IMPORTED_MODULE_0___default.a.notify({
             group: 'notif',
             title: 'Error, something went wrong !',
@@ -61848,9 +61917,11 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
             type: 'success'
           });
           commit('changeFirst', false);
+          commit('toggleLoading');
           dispatch('refreshNotes'); // this.$bus.$emit("refreshNotes") // Refresh notes
         })["catch"](function (error) {
           console.log(error);
+          commit('toggleLoading');
           vue__WEBPACK_IMPORTED_MODULE_0___default.a.notify({
             group: 'notif',
             title: 'Error, something went wrong !',

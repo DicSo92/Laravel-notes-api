@@ -16,6 +16,15 @@
                         <path d="M368.5 240H272v-96.5c0-8.8-7.2-16-16-16s-16 7.2-16 16V240h-96.5c-8.8 0-16 7.2-16 16 0 4.4 1.8 8.4 4.7 11.3 2.9 2.9 6.9 4.7 11.3 4.7H240v96.5c0 4.4 1.8 8.4 4.7 11.3 2.9 2.9 6.9 4.7 11.3 4.7 8.8 0 16-7.2 16-16V272h96.5c8.8 0 16-7.2 16-16s-7.2-16-16-16z"/>
                     </svg>
                 </button>
+                <div class="loaderUploadContainer ml-3" v-show="loading">
+                    <div class="lds-ring">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                    <p class="text-orange-500 font-bold ml-1">{{loadingText}}...</p>
+                </div>
             </div>
 
             <hr>
@@ -68,6 +77,12 @@
             },
             notes () {
                 return this.$store.state.notes
+            },
+            loading () {
+                return this.$store.state.loading
+            },
+            loadingText () {
+                return this.$store.state.loadingText
             }
         },
         methods: {
@@ -116,6 +131,51 @@
         }
         100% {
             width: 100%;
+        }
+    }
+
+    .loaderUploadContainer {
+        position: absolute;
+        transform: translateY(-50%);
+        top: 50%;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .lds-ring {
+        display: inline-block;
+        position: relative;
+        width: 20px;
+        height: 20px;
+        padding-top: 2px;
+    }
+    .lds-ring div {
+        box-sizing: border-box;
+        display: block;
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        border: 2px solid #ed8936;
+        border-radius: 50%;
+        animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        border-color: #ed8936 transparent transparent transparent;
+    }
+    .lds-ring div:nth-child(1) {
+        animation-delay: -0.45s;
+    }
+    .lds-ring div:nth-child(2) {
+        animation-delay: -0.3s;
+    }
+    .lds-ring div:nth-child(3) {
+        animation-delay: -0.15s;
+    }
+    @keyframes lds-ring {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
         }
     }
 </style>

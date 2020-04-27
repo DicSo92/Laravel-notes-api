@@ -9,7 +9,9 @@ export default new Vuex.Store({
         status: 'new',
         first: true,
         noteEdit: null,
-        notes: null
+        notes: null,
+        loading: false,
+        loadingText: ''
     },
     mutations: {
         changeStatus(state, val) {
@@ -23,6 +25,12 @@ export default new Vuex.Store({
         },
         changeNotes(state, val) {
             state.notes = val
+        },
+        toggleLoading(state, val) {
+            state.loading = !state.loading
+        },
+        changeLoadingText(state, val) {
+            state.loadingText = val
         },
     },
     actions: {
@@ -38,8 +46,13 @@ export default new Vuex.Store({
                 })
         },
         deleteNote ({commit, dispatch}, id) {
+            commit('changeLoadingText', 'Deleting')
+            commit('toggleLoading')
             axios.delete(`/api/notes/${id}`)
                 .then(response => {
+                    console.log(response)
+                    commit('toggleLoading')
+
                     Vue.notify({
                         group: 'notif',
                         title: 'Success !',
@@ -56,6 +69,8 @@ export default new Vuex.Store({
                 })
                 .catch(error => {
                     console.log(error)
+                    commit('toggleLoading')
+
                     Vue.notify({
                         group: 'notif',
                         title: 'Error, something went wrong !',
@@ -65,6 +80,8 @@ export default new Vuex.Store({
                 })
         },
         editNote ({commit, dispatch, state}, textContent) {
+            commit('changeLoadingText', 'Uploading')
+            commit('toggleLoading')
             if (state.status === 'new') {
                 axios.post(`/api/notes`, {
                     content: textContent
@@ -81,11 +98,15 @@ export default new Vuex.Store({
                         commit('changeFirst', false)
                         commit('changeNoteEdit', response.data.data)
 
+                        commit('toggleLoading')
+
                         dispatch('refreshNotes')
                         // this.$bus.$emit("refreshNotes") // Refresh notes
                     })
                     .catch(error => {
                         console.log(error);
+                        commit('toggleLoading')
+
                         Vue.notify({
                             group: 'notif',
                             title: 'Error, something went wrong !',
@@ -107,11 +128,15 @@ export default new Vuex.Store({
                         });
                         commit('changeFirst', false)
 
+                        commit('toggleLoading')
+
                         dispatch('refreshNotes')
                         // this.$bus.$emit("refreshNotes") // Refresh notes
                     })
                     .catch(error => {
                         console.log(error);
+                        commit('toggleLoading')
+
                         Vue.notify({
                             group: 'notif',
                             title: 'Error, something went wrong !',

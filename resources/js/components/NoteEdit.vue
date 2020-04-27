@@ -39,9 +39,9 @@
         },
         watch: {
             textContent: function (newData, oldData) {
-                this.$bus.$emit("loaderDebounceRemove")
-                this.debouncedLoader()
                 if (!this.first) {
+                    this.$bus.$emit("loaderDebounceRemove")
+                    this.debouncedLoader()
                     if (newData.length > 1) {
                         console.log("J'attends que vous arrêtiez de taper...")
                         this.loading = true
