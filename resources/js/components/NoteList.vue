@@ -19,6 +19,23 @@
     }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+    .listItem {
+        border-bottom: solid #dddddd 1px
+    }
+    .trashBtn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+    .trashSvg {
+        width: 17px;
+        height: auto;
+        fill: #e53e3e;
+    }
+    .trashBtn:hover {
+        .trashSvg {
+            fill: white;
+        }
+    }
 </style>

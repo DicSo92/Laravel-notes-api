@@ -50,22 +50,4 @@
     .notesList {
         border-right: solid #dddddd 2px;
     }
-    .listItem {
-        border-bottom: solid #dddddd 1px
-    }
-    .trashBtn {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-    }
-    .trashSvg {
-        width: 17px;
-        height: auto;
-        fill: #e53e3e;
-    }
-    .trashBtn:hover {
-        .trashSvg {
-            fill: white;
-        }
-    }
 </style>
