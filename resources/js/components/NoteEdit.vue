@@ -56,14 +56,23 @@
                     })
                         .then(response => {
                             console.log(response);
+                            this.$notify({
+                                group: 'notif',
+                                title: 'Success !',
+                                text: 'Note succesfully Created !',
+                                type: 'success'
+                            });
                             this.$bus.$emit("noteAdded", response.data.data) // set status to 'edit'
                             this.$bus.$emit("refreshNotes") // Refresh notes
-
-                            this.$bus.$emit("showAlert", {positive: true, alerts: ["Task successfully added"]})
                         })
                         .catch(error => {
                             console.log(error);
-                            this.$bus.$emit("showAlert", {positive: false, alerts: error.response.data.errors.name})
+                            this.$notify({
+                                group: 'notif',
+                                title: 'Error, something went wrong !',
+                                text: error.message,
+                                type: 'error'
+                            });
                         })
                 } else {
                     axios.put(`/api/notes/${this.noteEdit.id}`, {
@@ -71,14 +80,23 @@
                     })
                         .then(response => {
                             console.log(response);
+                            this.$notify({
+                                group: 'notif',
+                                title: 'Success !',
+                                text: 'Note succesfully Edited !',
+                                type: 'success'
+                            });
                             this.$bus.$emit("first", false)
                             this.$bus.$emit("refreshNotes") // Refresh notes
-
-                            this.$bus.$emit("showAlert", {positive: true, alerts: ["Task successfully added"]})
                         })
                         .catch(error => {
                             console.log(error);
-                            this.$bus.$emit("showAlert", {positive: false, alerts: error.response.data.errors.name})
+                            this.$notify({
+                                group: 'notif',
+                                title: 'Error, something went wrong !',
+                                text: error.message,
+                                type: 'error'
+                            });
                         })
                 }
             }

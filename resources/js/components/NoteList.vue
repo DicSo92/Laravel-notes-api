@@ -26,14 +26,23 @@
             deleteNote (id) {
                 axios.delete(`/api/notes/${id}`)
                     .then(response => {
+                        this.$notify({
+                            group: 'notif',
+                            title: 'Success !',
+                            text: 'Note succesfully Deleted !',
+                            type: 'success'
+                        });
                         this.$bus.$emit("refreshNotes")
-
                         this.$bus.$emit("deleteNote", id)
-
-                        this.$bus.$emit("showAlert", {positive: true, alerts: ["Task successfully deleted"]})
                     })
                     .catch(error => {
                         console.log(error)
+                        this.$notify({
+                            group: 'notif',
+                            title: 'Error, something went wrong !',
+                            text: error.message,
+                            type: 'error'
+                        });
                     })
             },
             showNote (note) {

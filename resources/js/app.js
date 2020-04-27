@@ -5,6 +5,10 @@ window.Vue = require('vue');
 import store from './store'
 import VueRouter from 'vue-router'
 
+import Notifications from 'vue-notification'
+
+Vue.use(Notifications)
+
 Vue.use(VueRouter)
 
 let bus = new Vue
