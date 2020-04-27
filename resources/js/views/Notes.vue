@@ -92,6 +92,7 @@
                 this.$store.commit('changeFirst', true)
                 this.$store.commit('changeStatus', 'new')
                 this.$bus.$emit("changeTextContent", '')
+                this.$bus.$emit("focusTextarea")
             }
         }
     }

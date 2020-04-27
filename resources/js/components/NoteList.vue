@@ -46,6 +46,7 @@
                 this.$store.dispatch('deleteNote', id)
             },
             showNote (note) {
+                this.$bus.$emit("focusTextarea")
                 this.$store.commit('changeStatus', 'edit')
                 this.$store.commit('changeFirst', true)
                 this.$store.commit('changeNoteEdit', note)

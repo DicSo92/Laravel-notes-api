@@ -1998,6 +1998,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "NoteEdit",
   props: [],
@@ -2010,8 +2011,12 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
+    this.$refs.textarea.focus();
     this.$bus.$on("changeTextContent", function (text) {
       _this.textContent = text;
+    });
+    this.$bus.$on("focusTextarea", function () {
+      _this.$refs.textarea.focus();
     });
     this.debouncedRequest = _.debounce(this.editNote, 2000);
     this.debouncedLoader = _.debounce(function () {
@@ -2129,6 +2134,7 @@ __webpack_require__.r(__webpack_exports__);
       this.$store.dispatch('deleteNote', id);
     },
     showNote: function showNote(note) {
+      this.$bus.$emit("focusTextarea");
       this.$store.commit('changeStatus', 'edit');
       this.$store.commit('changeFirst', true);
       this.$store.commit('changeNoteEdit', note);
@@ -2303,6 +2309,7 @@ __webpack_require__.r(__webpack_exports__);
       this.$store.commit('changeFirst', true);
       this.$store.commit('changeStatus', 'new');
       this.$bus.$emit("changeTextContent", '');
+      this.$bus.$emit("focusTextarea");
     }
   }
 });
@@ -38877,6 +38884,7 @@ var render = function() {
           expression: "textContent"
         }
       ],
+      ref: "textarea",
       staticClass:
         "border rounded focus:outline-none focus:shadow-outline p-3 bg-gray-100 w-full h-full",
       attrs: { placeholder: "New Note..." },

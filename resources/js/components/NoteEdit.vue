@@ -2,7 +2,8 @@
     <div class="w-full h-full p-3 relative">
         <textarea class="border rounded focus:outline-none focus:shadow-outline p-3 bg-gray-100 w-full h-full"
                   v-model="textContent"
-                  placeholder="New Note...">
+                  placeholder="New Note..."
+                  ref="textarea">
         </textarea>
 
         <div class="wordsLength mb-4 ml-5">
@@ -27,8 +28,13 @@
 
         },
         mounted() {
+            this.$refs.textarea.focus()
+
             this.$bus.$on("changeTextContent", text => {
                 this.textContent = text
+            })
+            this.$bus.$on("focusTextarea", () => {
+                this.$refs.textarea.focus()
             })
 
             this.debouncedRequest = _.debounce(this.editNote, 2000)
