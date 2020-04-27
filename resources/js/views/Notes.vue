@@ -47,24 +47,6 @@
             this.$bus.$on("refreshNotes", () => {
                 this.getNotes()
             })
-            this.$bus.$on("noteAdded", note => {
-                this.$store.commit('changeStatus', 'edit')
-                this.$store.commit('changeFirst', false)
-
-                this.$store.commit('changeNoteEdit', note)
-            })
-            this.$bus.$on("showNote", note => {
-                this.$store.commit('changeStatus', 'edit')
-                this.$store.commit('changeFirst', true)
-
-                this.$store.commit('changeNoteEdit', note)
-            })
-            this.$bus.$on("deleteNote", id => {
-                if (this.noteEdit && this.noteEdit.id === id) {
-                    this.$store.commit('changeStatus', 'new')
-                    this.$store.commit('changeFirst', true)
-                }
-            })
         },
         computed: {
             status () {

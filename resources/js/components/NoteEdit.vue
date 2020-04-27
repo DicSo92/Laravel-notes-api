@@ -69,7 +69,10 @@
                                 text: 'Note succesfully Created !',
                                 type: 'success'
                             });
-                            this.$bus.$emit("noteAdded", response.data.data) // set status to 'edit'
+                            this.$store.commit('changeStatus', 'edit')
+                            this.$store.commit('changeFirst', false)
+                            this.$store.commit('changeNoteEdit', note)
+
                             this.$bus.$emit("refreshNotes") // Refresh notes
                         })
                         .catch(error => {

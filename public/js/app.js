@@ -2053,8 +2053,11 @@ __webpack_require__.r(__webpack_exports__);
             type: 'success'
           });
 
-          _this2.$bus.$emit("noteAdded", response.data.data); // set status to 'edit'
+          _this2.$store.commit('changeStatus', 'edit');
 
+          _this2.$store.commit('changeFirst', false);
+
+          _this2.$store.commit('changeNoteEdit', note);
 
           _this2.$bus.$emit("refreshNotes"); // Refresh notes
 
@@ -2146,7 +2149,11 @@ __webpack_require__.r(__webpack_exports__);
 
         _this.$bus.$emit("refreshNotes");
 
-        _this.$bus.$emit("deleteNote", id);
+        if (_this.noteEdit && _this.noteEdit.id === id) {
+          _this.$store.commit('changeStatus', 'new');
+
+          _this.$store.commit('changeFirst', true);
+        }
       })["catch"](function (error) {
         console.log(error);
 
@@ -2159,7 +2166,9 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     showNote: function showNote(note) {
-      this.$bus.$emit("showNote", note);
+      this.$store.commit('changeStatus', 'edit');
+      this.$store.commit('changeFirst', true);
+      this.$store.commit('changeNoteEdit', note);
     }
   }
 });
@@ -2287,27 +2296,6 @@ __webpack_require__.r(__webpack_exports__);
 
     this.$bus.$on("refreshNotes", function () {
       _this.getNotes();
-    });
-    this.$bus.$on("noteAdded", function (note) {
-      _this.$store.commit('changeStatus', 'edit');
-
-      _this.$store.commit('changeFirst', false);
-
-      _this.$store.commit('changeNoteEdit', note);
-    });
-    this.$bus.$on("showNote", function (note) {
-      _this.$store.commit('changeStatus', 'edit');
-
-      _this.$store.commit('changeFirst', true);
-
-      _this.$store.commit('changeNoteEdit', note);
-    });
-    this.$bus.$on("deleteNote", function (id) {
-      if (_this.noteEdit && _this.noteEdit.id === id) {
-        _this.$store.commit('changeStatus', 'new');
-
-        _this.$store.commit('changeFirst', true);
-      }
     });
   },
   computed: {

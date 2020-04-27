@@ -33,7 +33,11 @@
                             type: 'success'
                         });
                         this.$bus.$emit("refreshNotes")
-                        this.$bus.$emit("deleteNote", id)
+                        
+                        if (this.noteEdit && this.noteEdit.id === id) {
+                            this.$store.commit('changeStatus', 'new')
+                            this.$store.commit('changeFirst', true)
+                        }
                     })
                     .catch(error => {
                         console.log(error)
@@ -46,7 +50,9 @@
                     })
             },
             showNote (note) {
-                this.$bus.$emit("showNote", note)
+                this.$store.commit('changeStatus', 'edit')
+                this.$store.commit('changeFirst', true)
+                this.$store.commit('changeNoteEdit', note)
             }
         }
     }
