@@ -54,9 +54,6 @@
             }
         },
         computed: {
-            status () {
-                return this.$store.state.status
-            },
             first () {
                 return this.$store.state.first
             },
@@ -73,58 +70,7 @@
         methods: {
             editNote () {
                 if (this.textContent.length > 0) {
-                    if (this.status === 'new') {
-                        axios.post(`/api/notes`, {
-                            content: this.textContent
-                        })
-                            .then(response => {
-                                console.log(response);
-                                this.$notify({
-                                    group: 'notif',
-                                    title: 'Success !',
-                                    text: 'Note succesfully Created !',
-                                    type: 'success'
-                                });
-                                this.$store.commit('changeStatus', 'edit')
-                                this.$store.commit('changeFirst', false)
-                                this.$store.commit('changeNoteEdit', response.data.data)
-
-                                this.$bus.$emit("refreshNotes") // Refresh notes
-                            })
-                            .catch(error => {
-                                console.log(error);
-                                this.$notify({
-                                    group: 'notif',
-                                    title: 'Error, something went wrong !',
-                                    text: error.message,
-                                    type: 'error'
-                                });
-                            })
-                    } else {
-                        axios.put(`/api/notes/${this.noteEdit.id}`, {
-                            content: this.textContent
-                        })
-                            .then(response => {
-                                console.log(response);
-                                this.$notify({
-                                    group: 'notif',
-                                    title: 'Success !',
-                                    text: 'Note succesfully Edited !',
-                                    type: 'success'
-                                });
-                                this.$store.commit('changeFirst', false)
-                                this.$bus.$emit("refreshNotes") // Refresh notes
-                            })
-                            .catch(error => {
-                                console.log(error);
-                                this.$notify({
-                                    group: 'notif',
-                                    title: 'Error, something went wrong !',
-                                    text: error.message,
-                                    type: 'error'
-                                });
-                            })
-                    }
+                    this.$store.dispatch('editNote', this.textContent)
                 } else {
                     this.$notify({
                         group: 'notif',

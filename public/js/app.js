@@ -2035,9 +2035,6 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   computed: {
-    status: function status() {
-      return this.$store.state.status;
-    },
     first: function first() {
       return this.$store.state.first;
     },
@@ -2053,68 +2050,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     editNote: function editNote() {
-      var _this2 = this;
-
       if (this.textContent.length > 0) {
-        if (this.status === 'new') {
-          axios.post("/api/notes", {
-            content: this.textContent
-          }).then(function (response) {
-            console.log(response);
-
-            _this2.$notify({
-              group: 'notif',
-              title: 'Success !',
-              text: 'Note succesfully Created !',
-              type: 'success'
-            });
-
-            _this2.$store.commit('changeStatus', 'edit');
-
-            _this2.$store.commit('changeFirst', false);
-
-            _this2.$store.commit('changeNoteEdit', response.data.data);
-
-            _this2.$bus.$emit("refreshNotes"); // Refresh notes
-
-          })["catch"](function (error) {
-            console.log(error);
-
-            _this2.$notify({
-              group: 'notif',
-              title: 'Error, something went wrong !',
-              text: error.message,
-              type: 'error'
-            });
-          });
-        } else {
-          axios.put("/api/notes/".concat(this.noteEdit.id), {
-            content: this.textContent
-          }).then(function (response) {
-            console.log(response);
-
-            _this2.$notify({
-              group: 'notif',
-              title: 'Success !',
-              text: 'Note succesfully Edited !',
-              type: 'success'
-            });
-
-            _this2.$store.commit('changeFirst', false);
-
-            _this2.$bus.$emit("refreshNotes"); // Refresh notes
-
-          })["catch"](function (error) {
-            console.log(error);
-
-            _this2.$notify({
-              group: 'notif',
-              title: 'Error, something went wrong !',
-              text: error.message,
-              type: 'error'
-            });
-          });
-        }
+        this.$store.dispatch('editNote', this.textContent);
       } else {
         this.$notify({
           group: 'notif',
@@ -57042,6 +56979,59 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
           type: 'error'
         });
       });
+    },
+    editNote: function editNote(_ref3, textContent) {
+      var commit = _ref3.commit,
+          dispatch = _ref3.dispatch,
+          state = _ref3.state;
+
+      if (state.status === 'new') {
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post("/api/notes", {
+          content: textContent
+        }).then(function (response) {
+          console.log(response);
+          vue__WEBPACK_IMPORTED_MODULE_0___default.a.notify({
+            group: 'notif',
+            title: 'Success !',
+            text: 'Note succesfully Created !',
+            type: 'success'
+          });
+          commit('changeStatus', 'edit');
+          commit('changeFirst', false);
+          commit('changeNoteEdit', response.data.data);
+          dispatch('refreshNotes'); // this.$bus.$emit("refreshNotes") // Refresh notes
+        })["catch"](function (error) {
+          console.log(error);
+          vue__WEBPACK_IMPORTED_MODULE_0___default.a.notify({
+            group: 'notif',
+            title: 'Error, something went wrong !',
+            text: error.message,
+            type: 'error'
+          });
+        });
+      } else {
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.put("/api/notes/".concat(state.noteEdit.id), {
+          content: textContent
+        }).then(function (response) {
+          console.log(response);
+          vue__WEBPACK_IMPORTED_MODULE_0___default.a.notify({
+            group: 'notif',
+            title: 'Success !',
+            text: 'Note succesfully Edited !',
+            type: 'success'
+          });
+          commit('changeFirst', false);
+          dispatch('refreshNotes'); // this.$bus.$emit("refreshNotes") // Refresh notes
+        })["catch"](function (error) {
+          console.log(error);
+          vue__WEBPACK_IMPORTED_MODULE_0___default.a.notify({
+            group: 'notif',
+            title: 'Error, something went wrong !',
+            text: error.message,
+            type: 'error'
+          });
+        });
+      }
     }
   },
   modules: {}

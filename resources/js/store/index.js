@@ -64,6 +64,63 @@ export default new Vuex.Store({
                     });
                 })
         },
+        editNote ({commit, dispatch, state}, textContent) {
+            if (state.status === 'new') {
+                axios.post(`/api/notes`, {
+                    content: textContent
+                })
+                    .then(response => {
+                        console.log(response);
+                        Vue.notify({
+                            group: 'notif',
+                            title: 'Success !',
+                            text: 'Note succesfully Created !',
+                            type: 'success'
+                        });
+                        commit('changeStatus', 'edit')
+                        commit('changeFirst', false)
+                        commit('changeNoteEdit', response.data.data)
+
+                        dispatch('refreshNotes')
+                        // this.$bus.$emit("refreshNotes") // Refresh notes
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        Vue.notify({
+                            group: 'notif',
+                            title: 'Error, something went wrong !',
+                            text: error.message,
+                            type: 'error'
+                        });
+                    })
+            } else {
+                axios.put(`/api/notes/${state.noteEdit.id}`, {
+                    content: textContent
+                })
+                    .then(response => {
+                        console.log(response);
+                        Vue.notify({
+                            group: 'notif',
+                            title: 'Success !',
+                            text: 'Note succesfully Edited !',
+                            type: 'success'
+                        });
+                        commit('changeFirst', false)
+
+                        dispatch('refreshNotes')
+                        // this.$bus.$emit("refreshNotes") // Refresh notes
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        Vue.notify({
+                            group: 'notif',
+                            title: 'Error, something went wrong !',
+                            text: error.message,
+                            type: 'error'
+                        });
+                    })
+            }
+        }
     },
     modules: {}
 })
