@@ -29,7 +29,7 @@ class NoteController extends ApiController
     {
         try {
             $validatedData = $request->validate([
-                'content' => 'required|unique:notes|max:255',
+                'content' => 'required|unique:notes|max:2000',
             ]);
             $note = Note::create($validatedData);
 

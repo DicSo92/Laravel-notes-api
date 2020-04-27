@@ -1984,14 +1984,56 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "NoteEdit",
+  props: ['status'],
   data: function data() {
-    return {};
+    return {
+      textContent: ''
+    };
   },
   created: function created() {},
-  mounted: function mounted() {},
-  methods: {}
+  mounted: function mounted() {
+    this.debouncedRequest = _.debounce(this.editNote, 2000);
+  },
+  watch: {
+    textContent: function textContent(newSearch, oldSearch) {
+      if (newSearch.length > 1) {
+        console.log("J'attends que vous arrêtiez de taper...");
+        this.loading = true;
+        this.debouncedRequest();
+      }
+    }
+  },
+  methods: {
+    editNote: function editNote() {
+      var _this = this;
+
+      if (this.status === 'new') {
+        axios.post("/api/notes", {
+          content: this.textContent
+        }).then(function (response) {
+          console.log(response);
+
+          _this.$bus.$emit("refreshNotes", response.data);
+
+          _this.$bus.$emit("showAlert", {
+            positive: true,
+            alerts: ["Task successfully added"]
+          });
+        })["catch"](function (error) {
+          console.log(error);
+
+          _this.$bus.$emit("showAlert", {
+            positive: false,
+            alerts: error.response.data.errors.name
+          });
+        });
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -2118,6 +2160,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2127,7 +2176,9 @@ __webpack_require__.r(__webpack_exports__);
     NoteList: _components_NoteList_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
-    return {};
+    return {
+      status: 'new'
+    };
   },
   created: function created() {},
   mounted: function mounted() {
@@ -6700,7 +6751,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".notes {\n  height: 90vh;\n}\n.notesList {\n  border-right: solid #dddddd 2px;\n}", ""]);
+exports.push([module.i, ".notes {\n  height: 90vh;\n}\n.notesList {\n  border-right: solid #dddddd 2px;\n}\n.addBtn {\n  position: absolute;\n  top: 10px;\n  right: 10px;\n}\n.addSvg {\n  width: 17px;\n  height: auto;\n  fill: #3182ce;\n}\n.addBtn:hover .addSvg {\n  fill: white;\n}", ""]);
 
 // exports
 
@@ -38637,8 +38688,25 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("textarea", {
+    directives: [
+      {
+        name: "model",
+        rawName: "v-model",
+        value: _vm.textContent,
+        expression: "textContent"
+      }
+    ],
     staticClass:
-      "border rounded focus:outline-none focus:shadow-outline m-3 p-3 h-full bg-gray-100"
+      "border rounded focus:outline-none focus:shadow-outline m-3 p-3 h-full bg-gray-100",
+    domProps: { value: _vm.textContent },
+    on: {
+      input: function($event) {
+        if ($event.target.composing) {
+          return
+        }
+        _vm.textContent = $event.target.value
+      }
+    }
   })
 }
 var staticRenderFns = []
@@ -38813,21 +38881,52 @@ var render = function() {
     _c(
       "div",
       { staticClass: "w-8/12 flex flex-col" },
-      [_vm._m(0), _vm._v(" "), _c("hr"), _vm._v(" "), _c("NoteEdit")],
+      [
+        _c("div", { staticClass: "w-full flex justify-center relative" }, [
+          _c("h3", { staticClass: "m-3 font-bold" }, [
+            _vm._v(
+              "Note (" + _vm._s(_vm.status === "new" ? "New" : "Edit") + ")"
+            )
+          ]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass:
+                "bg-transparent hover:bg-blue-500 font-semibold hover:text-white p-1 border border-blue-600 hover:border-transparent rounded-full addBtn"
+            },
+            [
+              _c(
+                "svg",
+                {
+                  staticClass: "addSvg",
+                  attrs: {
+                    xmlns: "http://www.w3.org/2000/svg",
+                    viewBox: "0 0 512 512"
+                  }
+                },
+                [
+                  _c("path", {
+                    attrs: {
+                      d:
+                        "M368.5 240H272v-96.5c0-8.8-7.2-16-16-16s-16 7.2-16 16V240h-96.5c-8.8 0-16 7.2-16 16 0 4.4 1.8 8.4 4.7 11.3 2.9 2.9 6.9 4.7 11.3 4.7H240v96.5c0 4.4 1.8 8.4 4.7 11.3 2.9 2.9 6.9 4.7 11.3 4.7 8.8 0 16-7.2 16-16V272h96.5c8.8 0 16-7.2 16-16s-7.2-16-16-16z"
+                    }
+                  })
+                ]
+              )
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("hr"),
+        _vm._v(" "),
+        _c("NoteEdit", { attrs: { status: _vm.status } })
+      ],
       1
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "w-full flex justify-center" }, [
-      _c("h3", { staticClass: "m-3 font-bold" }, [_vm._v("Note")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
