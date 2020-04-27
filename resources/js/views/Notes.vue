@@ -5,7 +5,7 @@
 
             <hr>
 
-            <NoteList :notes="notes"></NoteList>
+            <NoteList></NoteList>
         </div>
         <div class="w-8/12 flex flex-col">
             <div class="w-full flex justify-center relative">
@@ -37,15 +37,14 @@
         },
         data () {
             return {
-                notes: null
             }
         },
         created() {
-            this.getNotes()
+            this.$store.dispatch('refreshNotes')
         },
         mounted() {
             this.$bus.$on("refreshNotes", () => {
-                this.getNotes()
+                this.$store.dispatch('refreshNotes')
             })
         },
         computed: {
@@ -57,20 +56,12 @@
             },
             noteEdit () {
                 return this.$store.state.noteEdit
+            },
+            notes () {
+                return this.$store.state.notes
             }
         },
         methods: {
-            getNotes () {
-                axios.get(`/api/notes`)
-                    .then(response => {
-                        console.log(response);
-                        this.notes = response.data.data
-                    })
-                    .catch(error => {
-                        console.log(error);
-
-                    })
-            },
             addNote () {
                 this.$store.commit('changeFirst', true)
                 this.$store.commit('changeStatus', 'new')

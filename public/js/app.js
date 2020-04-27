@@ -2135,10 +2135,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "NoteList",
-  props: ['notes'],
+  props: [],
   computed: {
     noteEdit: function noteEdit() {
       return this.$store.state.noteEdit;
+    },
+    notes: function notes() {
+      return this.$store.state.notes;
     }
   },
   methods: {
@@ -2290,18 +2293,16 @@ __webpack_require__.r(__webpack_exports__);
     NoteList: _components_NoteList_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
-    return {
-      notes: null
-    };
+    return {};
   },
   created: function created() {
-    this.getNotes();
+    this.$store.dispatch('refreshNotes');
   },
   mounted: function mounted() {
     var _this = this;
 
     this.$bus.$on("refreshNotes", function () {
-      _this.getNotes();
+      _this.$store.dispatch('refreshNotes');
     });
   },
   computed: {
@@ -2313,19 +2314,12 @@ __webpack_require__.r(__webpack_exports__);
     },
     noteEdit: function noteEdit() {
       return this.$store.state.noteEdit;
+    },
+    notes: function notes() {
+      return this.$store.state.notes;
     }
   },
   methods: {
-    getNotes: function getNotes() {
-      var _this2 = this;
-
-      axios.get("/api/notes").then(function (response) {
-        console.log(response);
-        _this2.notes = response.data.data;
-      })["catch"](function (error) {
-        console.log(error);
-      });
-    },
     addNote: function addNote() {
       this.$store.commit('changeFirst', true);
       this.$store.commit('changeStatus', 'new');
@@ -39048,7 +39042,7 @@ var render = function() {
         _vm._v(" "),
         _c("hr"),
         _vm._v(" "),
-        _c("NoteList", { attrs: { notes: _vm.notes } })
+        _c("NoteList")
       ],
       1
     ),
@@ -56892,6 +56886,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
@@ -56899,7 +56896,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
   state: {
     status: 'new',
     first: true,
-    noteEdit: null
+    noteEdit: null,
+    notes: null
   },
   mutations: {
     changeStatus: function changeStatus(state, val) {
@@ -56910,9 +56908,23 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     },
     changeNoteEdit: function changeNoteEdit(state, val) {
       state.noteEdit = val;
+    },
+    changeNotes: function changeNotes(state, val) {
+      state.notes = val;
     }
   },
-  actions: {},
+  actions: {
+    refreshNotes: function refreshNotes(_ref) {
+      var commit = _ref.commit,
+          dispatch = _ref.dispatch;
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/api/notes').then(function (response) {
+        console.log(response);
+        commit("changeNotes", response.data.data);
+      })["catch"](function (error) {
+        console.log(error.message); // dispatch('anotherAction')
+      });
+    }
+  },
   modules: {}
 }));
 

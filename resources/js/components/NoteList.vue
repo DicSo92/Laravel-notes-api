@@ -20,12 +20,13 @@
 <script>
     export default {
         name: "NoteList",
-        props: [
-            'notes'
-        ],
+        props: [],
         computed: {
             noteEdit () {
                 return this.$store.state.noteEdit
+            },
+            notes () {
+                return this.$store.state.notes
             }
         },
         methods: {
