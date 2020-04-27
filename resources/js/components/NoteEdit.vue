@@ -1,8 +1,17 @@
 <template>
-    <textarea class="border rounded focus:outline-none focus:shadow-outline m-3 p-3 h-full bg-gray-100"
-              v-model="textContent"
-              placeholder="New Note...">
-    </textarea>
+    <div class="w-full h-full p-3 relative">
+        <textarea class="border rounded focus:outline-none focus:shadow-outline p-3 bg-gray-100 w-full h-full"
+                  v-model="textContent"
+                  placeholder="New Note...">
+        </textarea>
+
+        <div class="wordsLength mb-4 ml-5">
+            <h6 class="text-gray-500">{{wordsCount}} Words</h6>
+        </div>
+        <div class="limitLetters mb-4 mr-5">
+            <h6 class="text-gray-500">{{textLength}} / 2000</h6>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -53,61 +62,76 @@
             },
             noteEdit () {
                 return this.$store.state.noteEdit
+            },
+            textLength () {
+                return this.textContent.length
+            },
+            wordsCount () {
+                return this.textContent.length > 0 ? this.textContent.split(' ').length : 0
             }
         },
         methods: {
             editNote () {
-                if (this.status === 'new') {
-                    axios.post(`/api/notes`, {
-                        content: this.textContent
-                    })
-                        .then(response => {
-                            console.log(response);
-                            this.$notify({
-                                group: 'notif',
-                                title: 'Success !',
-                                text: 'Note succesfully Created !',
-                                type: 'success'
-                            });
-                            this.$store.commit('changeStatus', 'edit')
-                            this.$store.commit('changeFirst', false)
-                            this.$store.commit('changeNoteEdit', note)
+                if (this.textContent.length > 0) {
+                    if (this.status === 'new') {
+                        axios.post(`/api/notes`, {
+                            content: this.textContent
+                        })
+                            .then(response => {
+                                console.log(response);
+                                this.$notify({
+                                    group: 'notif',
+                                    title: 'Success !',
+                                    text: 'Note succesfully Created !',
+                                    type: 'success'
+                                });
+                                this.$store.commit('changeStatus', 'edit')
+                                this.$store.commit('changeFirst', false)
+                                this.$store.commit('changeNoteEdit', response.data.data)
 
-                            this.$bus.$emit("refreshNotes") // Refresh notes
+                                this.$bus.$emit("refreshNotes") // Refresh notes
+                            })
+                            .catch(error => {
+                                console.log(error);
+                                this.$notify({
+                                    group: 'notif',
+                                    title: 'Error, something went wrong !',
+                                    text: error.message,
+                                    type: 'error'
+                                });
+                            })
+                    } else {
+                        axios.put(`/api/notes/${this.noteEdit.id}`, {
+                            content: this.textContent
                         })
-                        .catch(error => {
-                            console.log(error);
-                            this.$notify({
-                                group: 'notif',
-                                title: 'Error, something went wrong !',
-                                text: error.message,
-                                type: 'error'
-                            });
-                        })
+                            .then(response => {
+                                console.log(response);
+                                this.$notify({
+                                    group: 'notif',
+                                    title: 'Success !',
+                                    text: 'Note succesfully Edited !',
+                                    type: 'success'
+                                });
+                                this.$store.commit('changeFirst', false)
+                                this.$bus.$emit("refreshNotes") // Refresh notes
+                            })
+                            .catch(error => {
+                                console.log(error);
+                                this.$notify({
+                                    group: 'notif',
+                                    title: 'Error, something went wrong !',
+                                    text: error.message,
+                                    type: 'error'
+                                });
+                            })
+                    }
                 } else {
-                    axios.put(`/api/notes/${this.noteEdit.id}`, {
-                        content: this.textContent
-                    })
-                        .then(response => {
-                            console.log(response);
-                            this.$notify({
-                                group: 'notif',
-                                title: 'Success !',
-                                text: 'Note succesfully Edited !',
-                                type: 'success'
-                            });
-                            this.$store.commit('changeFirst', false)
-                            this.$bus.$emit("refreshNotes") // Refresh notes
-                        })
-                        .catch(error => {
-                            console.log(error);
-                            this.$notify({
-                                group: 'notif',
-                                title: 'Error, something went wrong !',
-                                text: error.message,
-                                type: 'error'
-                            });
-                        })
+                    this.$notify({
+                        group: 'notif',
+                        title: 'Error, something went wrong !',
+                        text: 'Please type something to save !',
+                        type: 'error'
+                    });
                 }
             }
         }
@@ -115,5 +139,17 @@
 </script>
 
 <style scoped lang="scss">
-
+    .limitLetters {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+    }
+    .wordsLength {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+    }
+    textarea {
+        resize: none;
+    }
 </style>
