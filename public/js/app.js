@@ -2157,6 +2157,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "NoteList",
   props: [],
@@ -6916,7 +6920,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".listItem[data-v-7c04491b] {\n  border-bottom: solid #dddddd 1px;\n}\n.trashBtn[data-v-7c04491b] {\n  position: absolute;\n  top: 10px;\n  right: 10px;\n}\n.trashSvg[data-v-7c04491b] {\n  width: 17px;\n  height: auto;\n  fill: #e53e3e;\n}\n.trashBtn:hover .trashSvg[data-v-7c04491b] {\n  fill: white;\n}", ""]);
+exports.push([module.i, ".listItem[data-v-7c04491b] {\n  border-bottom: solid #dddddd 1px;\n}\n.trashBtn[data-v-7c04491b] {\n  position: absolute;\n  top: 10px;\n  right: 10px;\n}\n.trashSvg[data-v-7c04491b] {\n  width: 17px;\n  height: auto;\n  fill: #e53e3e;\n}\n.trashBtn:hover .trashSvg[data-v-7c04491b] {\n  fill: white;\n}\n.list-enter[data-v-7c04491b], .list-leave-to[data-v-7c04491b] {\n  opacity: 0;\n  transform: translateX(-50px);\n}\n.list-leave-active[data-v-7c04491b] {\n  position: absolute;\n  /*z-index: 10;*/\n}\n.list-move[data-v-7c04491b] {\n  transition: transform 0.5s;\n}\n.transitionItem[data-v-7c04491b] {\n  transition: all 0.5s;\n}", ""]);
 
 // exports
 
@@ -38974,64 +38978,72 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "NoteList" },
-    _vm._l(_vm.notes, function(note) {
-      return _c(
-        "div",
-        {
-          staticClass:
-            "listItem p-3 flex flex-col relative hover:bg-gray-200 cursor-pointer",
-          class:
-            _vm.noteEdit && note.id === _vm.noteEdit.id
-              ? "bg-orange-300 hover:bg-orange-400"
-              : "",
-          on: {
-            click: function($event) {
-              return _vm.showNote(note)
-            }
-          }
-        },
-        [
-          _c("h6", { staticClass: "font-bold" }, [_vm._v("18:06")]),
-          _vm._v(" "),
-          _c("p", [_vm._v(_vm._s(note.content))]),
-          _vm._v(" "),
-          _c(
-            "button",
+    [
+      _c(
+        "transition-group",
+        { attrs: { name: "list", tag: "div" } },
+        _vm._l(_vm.notes, function(note) {
+          return _c(
+            "div",
             {
+              key: note.id,
               staticClass:
-                "bg-transparent hover:bg-red-500 font-semibold hover:text-white p-1 border border-red-600 hover:border-transparent rounded-full trashBtn",
+                "listItem p-3 flex flex-col relative hover:bg-gray-200 cursor-pointer transitionItem",
+              class:
+                _vm.noteEdit && note.id === _vm.noteEdit.id
+                  ? "bg-orange-300 hover:bg-orange-400"
+                  : "",
               on: {
                 click: function($event) {
-                  $event.stopPropagation()
-                  return _vm.deleteNote(note.id)
+                  return _vm.showNote(note)
                 }
               }
             },
             [
+              _c("h6", { staticClass: "font-bold" }, [_vm._v("18:06")]),
+              _vm._v(" "),
+              _c("p", [_vm._v(_vm._s(note.content))]),
+              _vm._v(" "),
               _c(
-                "svg",
+                "button",
                 {
-                  staticClass: "trashSvg",
-                  attrs: {
-                    xmlns: "http://www.w3.org/2000/svg",
-                    viewBox: "0 0 512 512"
+                  staticClass:
+                    "bg-transparent hover:bg-red-500 font-semibold hover:text-white p-1 border border-red-600 hover:border-transparent rounded-full trashBtn",
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      return _vm.deleteNote(note.id)
+                    }
                   }
                 },
                 [
-                  _c("path", {
-                    attrs: {
-                      d:
-                        "M128 405.429C128 428.846 147.198 448 170.667 448h170.667C364.802 448 384 428.846 384 405.429V160H128v245.429zM416 96h-80l-26.785-32H202.786L176 96H96v32h320V96z"
-                    }
-                  })
+                  _c(
+                    "svg",
+                    {
+                      staticClass: "trashSvg",
+                      attrs: {
+                        xmlns: "http://www.w3.org/2000/svg",
+                        viewBox: "0 0 512 512"
+                      }
+                    },
+                    [
+                      _c("path", {
+                        attrs: {
+                          d:
+                            "M128 405.429C128 428.846 147.198 448 170.667 448h170.667C364.802 448 384 428.846 384 405.429V160H128v245.429zM416 96h-80l-26.785-32H202.786L176 96H96v32h320V96z"
+                        }
+                      })
+                    ]
+                  )
                 ]
               )
             ]
           )
-        ]
+        }),
+        0
       )
-    }),
-    0
+    ],
+    1
   )
 }
 var staticRenderFns = []
