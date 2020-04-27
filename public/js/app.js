@@ -1990,7 +1990,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "NoteEdit",
-  props: ['noteEdit', 'first'],
+  props: [],
   data: function data() {
     return {
       textContent: ''
@@ -2014,7 +2014,7 @@ __webpack_require__.r(__webpack_exports__);
           this.debouncedRequest();
         }
       } else {
-        this.$bus.$emit("first", false);
+        this.$store.commit('changeFirst', false);
       }
     },
     noteEdit: function noteEdit(newNote, oldNote) {
@@ -2028,6 +2028,12 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     status: function status() {
       return this.$store.state.status;
+    },
+    first: function first() {
+      return this.$store.state.first;
+    },
+    noteEdit: function noteEdit() {
+      return this.$store.state.noteEdit;
     }
   },
   methods: {
@@ -2075,7 +2081,7 @@ __webpack_require__.r(__webpack_exports__);
             type: 'success'
           });
 
-          _this2.$bus.$emit("first", false);
+          _this2.$store.commit('changeFirst', false);
 
           _this2.$bus.$emit("refreshNotes"); // Refresh notes
 
@@ -2260,21 +2266,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'ToDo',
+  name: 'Notes',
   components: {
     NoteEdit: _components_NoteEdit_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     NoteList: _components_NoteList_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
     return {
-      noteEdit: null,
-      first: true,
       notes: null
     };
   },
@@ -2290,29 +2291,34 @@ __webpack_require__.r(__webpack_exports__);
     this.$bus.$on("noteAdded", function (note) {
       _this.$store.commit('changeStatus', 'edit');
 
-      _this.first = false;
-      _this.noteEdit = note;
+      _this.$store.commit('changeFirst', false);
+
+      _this.$store.commit('changeNoteEdit', note);
     });
     this.$bus.$on("showNote", function (note) {
       _this.$store.commit('changeStatus', 'edit');
 
-      _this.first = true;
-      _this.noteEdit = note;
-    });
-    this.$bus.$on("first", function (status) {
-      _this.first = status;
+      _this.$store.commit('changeFirst', true);
+
+      _this.$store.commit('changeNoteEdit', note);
     });
     this.$bus.$on("deleteNote", function (id) {
       if (_this.noteEdit && _this.noteEdit.id === id) {
         _this.$store.commit('changeStatus', 'new');
 
-        _this.first = true;
+        _this.$store.commit('changeFirst', true);
       }
     });
   },
   computed: {
     status: function status() {
       return this.$store.state.status;
+    },
+    first: function first() {
+      return this.$store.state.first;
+    },
+    noteEdit: function noteEdit() {
+      return this.$store.state.noteEdit;
     }
   },
   methods: {
@@ -2327,7 +2333,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     addNote: function addNote() {
-      this.first = true;
+      this.$store.commit('changeFirst', true);
       this.$store.commit('changeStatus', 'new');
       this.$bus.$emit("changeTextContent", '');
     }
@@ -39092,13 +39098,7 @@ var render = function() {
         _vm._v(" "),
         _c("hr"),
         _vm._v(" "),
-        _c("NoteEdit", {
-          attrs: {
-            status: _vm.status,
-            noteEdit: _vm.noteEdit,
-            first: _vm.first
-          }
-        })
+        _c("NoteEdit")
       ],
       1
     )
@@ -56899,11 +56899,19 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
-    status: 'new'
+    status: 'new',
+    first: true,
+    noteEdit: null
   },
   mutations: {
     changeStatus: function changeStatus(state, val) {
       state.status = val;
+    },
+    changeFirst: function changeFirst(state, val) {
+      state.first = val;
+    },
+    changeNoteEdit: function changeNoteEdit(state, val) {
+      state.noteEdit = val;
     }
   },
   actions: {},

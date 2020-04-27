@@ -8,10 +8,7 @@
 <script>
     export default {
         name: "NoteEdit",
-        props: [
-            'noteEdit',
-            'first'
-        ],
+        props: [],
         data () {
             return {
                 textContent: ''
@@ -36,7 +33,7 @@
                         this.debouncedRequest()
                     }
                 } else {
-                    this.$bus.$emit("first", false)
+                    this.$store.commit('changeFirst', false)
                 }
             },
             noteEdit: function (newNote, oldNote) {
@@ -50,6 +47,12 @@
         computed: {
             status () {
                 return this.$store.state.status
+            },
+            first () {
+                return this.$store.state.first
+            },
+            noteEdit () {
+                return this.$store.state.noteEdit
             }
         },
         methods: {
@@ -90,7 +93,7 @@
                                 text: 'Note succesfully Edited !',
                                 type: 'success'
                             });
-                            this.$bus.$emit("first", false)
+                            this.$store.commit('changeFirst', false)
                             this.$bus.$emit("refreshNotes") // Refresh notes
                         })
                         .catch(error => {

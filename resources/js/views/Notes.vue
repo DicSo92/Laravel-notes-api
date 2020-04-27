@@ -20,10 +20,7 @@
 
             <hr>
 
-            <NoteEdit :status="status"
-                      :noteEdit="noteEdit"
-                      :first="first">
-            </NoteEdit>
+            <NoteEdit></NoteEdit>
         </div>
     </div>
 </template>
@@ -33,16 +30,13 @@
     import NoteList from '../components/NoteList.vue'
 
     export default {
-        name: 'ToDo',
+        name: 'Notes',
         components: {
             NoteEdit,
             NoteList
         },
         data () {
             return {
-                noteEdit: null,
-                first: true,
-
                 notes: null
             }
         },
@@ -55,27 +49,32 @@
             })
             this.$bus.$on("noteAdded", note => {
                 this.$store.commit('changeStatus', 'edit')
-                this.first = false
-                this.noteEdit = note
+                this.$store.commit('changeFirst', false)
+
+                this.$store.commit('changeNoteEdit', note)
             })
             this.$bus.$on("showNote", note => {
                 this.$store.commit('changeStatus', 'edit')
-                this.first = true
-                this.noteEdit = note
-            })
-            this.$bus.$on("first", status => {
-                this.first = status
+                this.$store.commit('changeFirst', true)
+
+                this.$store.commit('changeNoteEdit', note)
             })
             this.$bus.$on("deleteNote", id => {
                 if (this.noteEdit && this.noteEdit.id === id) {
                     this.$store.commit('changeStatus', 'new')
-                    this.first = true
+                    this.$store.commit('changeFirst', true)
                 }
             })
         },
         computed: {
             status () {
                 return this.$store.state.status
+            },
+            first () {
+                return this.$store.state.first
+            },
+            noteEdit () {
+                return this.$store.state.noteEdit
             }
         },
         methods: {
@@ -91,7 +90,7 @@
                     })
             },
             addNote () {
-                this.first = true
+                this.$store.commit('changeFirst', true)
                 this.$store.commit('changeStatus', 'new')
                 this.$bus.$emit("changeTextContent", '')
             }
