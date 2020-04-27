@@ -58,7 +58,7 @@
                 }
             },
             noteEdit: function (newNote, oldNote) {
-                this.textContent = newNote.content
+                this.textContent = newNote ? newNote.content : ''
             },
             status: function (newStatus, oldStatus) {
                 if (newStatus === 'new') this.textContent = ''

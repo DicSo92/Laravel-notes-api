@@ -91,6 +91,7 @@
         },
         methods: {
             addNote () {
+                this.$store.commit('changeNoteEdit', null)
                 this.$store.commit('changeFirst', true)
                 this.$store.commit('changeStatus', 'new')
                 this.$bus.$emit("changeTextContent", '')

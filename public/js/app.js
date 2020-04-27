@@ -2039,7 +2039,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     noteEdit: function noteEdit(newNote, oldNote) {
-      this.textContent = newNote.content;
+      this.textContent = newNote ? newNote.content : '';
     },
     status: function status(newStatus, oldStatus) {
       if (newStatus === 'new') this.textContent = '';
@@ -2308,6 +2308,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     addNote: function addNote() {
+      this.$store.commit('changeNoteEdit', null);
       this.$store.commit('changeFirst', true);
       this.$store.commit('changeStatus', 'new');
       this.$bus.$emit("changeTextContent", '');
