@@ -2132,9 +2132,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "NoteList",
   props: ['notes'],
+  computed: {
+    noteEdit: function noteEdit() {
+      return this.$store.state.noteEdit;
+    }
+  },
   methods: {
     deleteNote: function deleteNote(id) {
       var _this = this;
@@ -38893,6 +38899,10 @@ var render = function() {
         {
           staticClass:
             "listItem p-3 flex flex-col relative hover:bg-gray-200 cursor-pointer",
+          class:
+            _vm.noteEdit && note.id === _vm.noteEdit.id
+              ? "bg-orange-300 hover:bg-orange-400"
+              : "",
           on: {
             click: function($event) {
               return _vm.showNote(note)

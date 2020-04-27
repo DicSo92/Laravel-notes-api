@@ -2,6 +2,7 @@
     <div class="NoteList">
         <div class="listItem p-3 flex flex-col relative hover:bg-gray-200 cursor-pointer"
              v-for="note in notes"
+             :class="noteEdit && note.id === noteEdit.id ? 'bg-orange-300 hover:bg-orange-400' : ''"
              @click="showNote(note)">
             <h6 class="font-bold">18:06</h6>
             <p>{{note.content}}</p>
@@ -22,6 +23,11 @@
         props: [
             'notes'
         ],
+        computed: {
+            noteEdit () {
+                return this.$store.state.noteEdit
+            }
+        },
         methods: {
             deleteNote (id) {
                 axios.delete(`/api/notes/${id}`)
@@ -33,7 +39,7 @@
                             type: 'success'
                         });
                         this.$bus.$emit("refreshNotes")
-                        
+
                         if (this.noteEdit && this.noteEdit.id === id) {
                             this.$store.commit('changeStatus', 'new')
                             this.$store.commit('changeFirst', true)
