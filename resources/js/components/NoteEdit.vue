@@ -1,6 +1,7 @@
 <template>
     <textarea class="border rounded focus:outline-none focus:shadow-outline m-3 p-3 h-full bg-gray-100"
-              v-model="textContent">
+              v-model="textContent"
+              placeholder="New Note...">
     </textarea>
 </template>
 
@@ -8,7 +9,9 @@
     export default {
         name: "NoteEdit",
         props: [
-            'status'
+            'status',
+            'noteEdit',
+            'first'
         ],
         data () {
             return {
@@ -20,15 +23,30 @@
         },
         mounted() {
             this.debouncedRequest = _.debounce(this.editNote, 2000)
+
+            this.$bus.$on("changeTextContent", text => {
+                this.textContent = text
+            })
         },
         watch: {
-            textContent: function (newSearch, oldSearch) {
-                if (newSearch.length > 1) {
-                    console.log("J'attends que vous arrêtiez de taper...")
-                    this.loading = true
-                    this.debouncedRequest()
+            textContent: function (newData, oldData) {
+                if (!this.first) {
+                    if (newData.length > 1) {
+                        console.log("J'attends que vous arrêtiez de taper...")
+                        this.loading = true
+                        this.debouncedRequest()
+                    }
+                } else {
+                    this.$bus.$emit("first", false)
                 }
             },
+            noteEdit: function (newNote, oldNote) {
+                this.textContent = newNote.content
+            },
+            status: function (newStatus, oldStatus) {
+                if (newStatus === 'new') this.textContent = ''
+                if (newStatus === 'edit') this.textContent = this.noteEdit.content
+            }
         },
         methods: {
             editNote () {
@@ -38,7 +56,22 @@
                     })
                         .then(response => {
                             console.log(response);
-                            this.$bus.$emit("noteAdded") // set status to 'edit'
+                            this.$bus.$emit("noteAdded", response.data.data) // set status to 'edit'
+                            this.$bus.$emit("refreshNotes") // Refresh notes
+
+                            this.$bus.$emit("showAlert", {positive: true, alerts: ["Task successfully added"]})
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            this.$bus.$emit("showAlert", {positive: false, alerts: error.response.data.errors.name})
+                        })
+                } else {
+                    axios.put(`/api/notes/${this.noteEdit.id}`, {
+                        content: this.textContent
+                    })
+                        .then(response => {
+                            console.log(response);
+                            this.$bus.$emit("first", false)
                             this.$bus.$emit("refreshNotes") // Refresh notes
 
                             this.$bus.$emit("showAlert", {positive: true, alerts: ["Task successfully added"]})

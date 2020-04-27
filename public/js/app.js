@@ -1986,9 +1986,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "NoteEdit",
-  props: ['status'],
+  props: ['status', 'noteEdit', 'first'],
   data: function data() {
     return {
       textContent: ''
@@ -1996,20 +1997,36 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {},
   mounted: function mounted() {
+    var _this = this;
+
     this.debouncedRequest = _.debounce(this.editNote, 2000);
+    this.$bus.$on("changeTextContent", function (text) {
+      _this.textContent = text;
+    });
   },
   watch: {
-    textContent: function textContent(newSearch, oldSearch) {
-      if (newSearch.length > 1) {
-        console.log("J'attends que vous arrêtiez de taper...");
-        this.loading = true;
-        this.debouncedRequest();
+    textContent: function textContent(newData, oldData) {
+      if (!this.first) {
+        if (newData.length > 1) {
+          console.log("J'attends que vous arrêtiez de taper...");
+          this.loading = true;
+          this.debouncedRequest();
+        }
+      } else {
+        this.$bus.$emit("first", false);
       }
+    },
+    noteEdit: function noteEdit(newNote, oldNote) {
+      this.textContent = newNote.content;
+    },
+    status: function status(newStatus, oldStatus) {
+      if (newStatus === 'new') this.textContent = '';
+      if (newStatus === 'edit') this.textContent = this.noteEdit.content;
     }
   },
   methods: {
     editNote: function editNote() {
-      var _this = this;
+      var _this2 = this;
 
       if (this.status === 'new') {
         axios.post("/api/notes", {
@@ -2017,20 +2034,43 @@ __webpack_require__.r(__webpack_exports__);
         }).then(function (response) {
           console.log(response);
 
-          _this.$bus.$emit("noteAdded"); // set status to 'edit'
+          _this2.$bus.$emit("noteAdded", response.data.data); // set status to 'edit'
 
 
-          _this.$bus.$emit("refreshNotes"); // Refresh notes
+          _this2.$bus.$emit("refreshNotes"); // Refresh notes
 
 
-          _this.$bus.$emit("showAlert", {
+          _this2.$bus.$emit("showAlert", {
             positive: true,
             alerts: ["Task successfully added"]
           });
         })["catch"](function (error) {
           console.log(error);
 
-          _this.$bus.$emit("showAlert", {
+          _this2.$bus.$emit("showAlert", {
+            positive: false,
+            alerts: error.response.data.errors.name
+          });
+        });
+      } else {
+        axios.put("/api/notes/".concat(this.noteEdit.id), {
+          content: this.textContent
+        }).then(function (response) {
+          console.log(response);
+
+          _this2.$bus.$emit("first", false);
+
+          _this2.$bus.$emit("refreshNotes"); // Refresh notes
+
+
+          _this2.$bus.$emit("showAlert", {
+            positive: true,
+            alerts: ["Task successfully added"]
+          });
+        })["catch"](function (error) {
+          console.log(error);
+
+          _this2.$bus.$emit("showAlert", {
             positive: false,
             alerts: error.response.data.errors.name
           });
@@ -2067,6 +2107,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "NoteList",
   props: ['notes'],
@@ -2077,6 +2119,8 @@ __webpack_require__.r(__webpack_exports__);
       axios["delete"]("/api/notes/".concat(id)).then(function (response) {
         _this.$bus.$emit("refreshNotes");
 
+        _this.$bus.$emit("deleteNote", id);
+
         _this.$bus.$emit("showAlert", {
           positive: true,
           alerts: ["Task successfully deleted"]
@@ -2084,6 +2128,9 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    showNote: function showNote(note) {
+      this.$bus.$emit("showNote", note);
     }
   }
 });
@@ -2189,6 +2236,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2200,6 +2251,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       status: 'new',
+      noteEdit: null,
+      first: true,
       notes: null
     };
   },
@@ -2212,8 +2265,24 @@ __webpack_require__.r(__webpack_exports__);
     this.$bus.$on("refreshNotes", function () {
       _this.getNotes();
     });
-    this.$bus.$on("noteAdded", function () {
+    this.$bus.$on("noteAdded", function (note) {
       _this.status = 'edit';
+      _this.first = false;
+      _this.noteEdit = note;
+    });
+    this.$bus.$on("showNote", function (note) {
+      _this.first = true;
+      _this.status = 'edit';
+      _this.noteEdit = note;
+    });
+    this.$bus.$on("first", function (status) {
+      _this.first = status;
+    });
+    this.$bus.$on("deleteNote", function (id) {
+      if (_this.noteEdit && _this.noteEdit.id === id) {
+        _this.first = true;
+        _this.status = 'new';
+      }
     });
   },
   methods: {
@@ -2226,6 +2295,11 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    addNote: function addNote() {
+      this.first = true;
+      this.status = 'new';
+      this.$bus.$emit("changeTextContent", '');
     }
   }
 });
@@ -38741,6 +38815,7 @@ var render = function() {
     ],
     staticClass:
       "border rounded focus:outline-none focus:shadow-outline m-3 p-3 h-full bg-gray-100",
+    attrs: { placeholder: "New Note..." },
     domProps: { value: _vm.textContent },
     on: {
       input: function($event) {
@@ -38782,7 +38857,12 @@ var render = function() {
         "div",
         {
           staticClass:
-            "listItem p-3 flex flex-col relative hover:bg-gray-200 cursor-pointer"
+            "listItem p-3 flex flex-col relative hover:bg-gray-200 cursor-pointer",
+          on: {
+            click: function($event) {
+              return _vm.showNote(note)
+            }
+          }
         },
         [
           _c("h6", { staticClass: "font-bold" }, [_vm._v("18:06")]),
@@ -38796,6 +38876,7 @@ var render = function() {
                 "bg-transparent hover:bg-red-500 font-semibold hover:text-white p-1 border border-red-600 hover:border-transparent rounded-full trashBtn",
               on: {
                 click: function($event) {
+                  $event.stopPropagation()
                   return _vm.deleteNote(note.id)
                 }
               }
@@ -38942,7 +39023,8 @@ var render = function() {
             "button",
             {
               staticClass:
-                "bg-transparent hover:bg-blue-500 font-semibold hover:text-white p-1 border border-blue-600 hover:border-transparent rounded-full addBtn"
+                "bg-transparent hover:bg-blue-500 font-semibold hover:text-white p-1 border border-blue-600 hover:border-transparent rounded-full addBtn",
+              on: { click: _vm.addNote }
             },
             [
               _c(
@@ -38969,7 +39051,13 @@ var render = function() {
         _vm._v(" "),
         _c("hr"),
         _vm._v(" "),
-        _c("NoteEdit", { attrs: { status: _vm.status } })
+        _c("NoteEdit", {
+          attrs: {
+            status: _vm.status,
+            noteEdit: _vm.noteEdit,
+            first: _vm.first
+          }
+        })
       ],
       1
     )
