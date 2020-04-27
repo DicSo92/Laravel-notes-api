@@ -9,6 +9,8 @@ import Notifications from 'vue-notification'
 
 Vue.use(Notifications)
 
+Vue.use(require('vue-moment'));
+
 Vue.use(VueRouter)
 
 let bus = new Vue
