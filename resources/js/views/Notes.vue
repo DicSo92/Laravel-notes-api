@@ -19,6 +19,7 @@
             </div>
 
             <hr>
+            <div ref="loaderDebounce" class="loaderDebounce"></div>
 
             <NoteEdit></NoteEdit>
         </div>
@@ -45,6 +46,14 @@
         mounted() {
             this.$bus.$on("refreshNotes", () => {
                 this.$store.dispatch('refreshNotes')
+            })
+            this.$bus.$on("loaderDebounceRemove", () => {
+                if (this.$refs.loaderDebounce.classList.contains('loaderTransition')) {
+                    this.$refs.loaderDebounce.classList.remove('loaderTransition')
+                }
+            })
+            this.$bus.$on("loaderDebounceAdd", () => {
+                this.$refs.loaderDebounce.classList.add('loaderTransition')
             })
         },
         computed: {
@@ -91,6 +100,22 @@
     .addBtn:hover {
         .addSvg {
             fill: white;
+        }
+    }
+    .loaderDebounce {
+        height: 2px;
+        width: 0;
+        background-color: blue;
+    }
+    .loaderTransition {
+        animation: linear loaderDeb 1.8s;
+    }
+    @keyframes loaderDeb {
+        0% {
+            width: 0;
+        }
+        100% {
+            width: 100%;
         }
     }
 </style>

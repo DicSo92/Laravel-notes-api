@@ -27,14 +27,20 @@
 
         },
         mounted() {
-            this.debouncedRequest = _.debounce(this.editNote, 2000)
-
             this.$bus.$on("changeTextContent", text => {
                 this.textContent = text
             })
+
+            this.debouncedRequest = _.debounce(this.editNote, 2000)
+
+            this.debouncedLoader = _.debounce(() => {
+                this.$bus.$emit("loaderDebounceAdd")
+            }, 200)
         },
         watch: {
             textContent: function (newData, oldData) {
+                this.$bus.$emit("loaderDebounceRemove")
+                this.debouncedLoader()
                 if (!this.first) {
                     if (newData.length > 1) {
                         console.log("J'attends que vous arrêtiez de taper...")

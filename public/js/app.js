@@ -2009,13 +2009,19 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    this.debouncedRequest = _.debounce(this.editNote, 2000);
     this.$bus.$on("changeTextContent", function (text) {
       _this.textContent = text;
     });
+    this.debouncedRequest = _.debounce(this.editNote, 2000);
+    this.debouncedLoader = _.debounce(function () {
+      _this.$bus.$emit("loaderDebounceAdd");
+    }, 200);
   },
   watch: {
     textContent: function textContent(newData, oldData) {
+      this.$bus.$emit("loaderDebounceRemove");
+      this.debouncedLoader();
+
       if (!this.first) {
         if (newData.length > 1) {
           console.log("J'attends que vous arrêtiez de taper...");
@@ -2223,6 +2229,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2242,6 +2249,14 @@ __webpack_require__.r(__webpack_exports__);
 
     this.$bus.$on("refreshNotes", function () {
       _this.$store.dispatch('refreshNotes');
+    });
+    this.$bus.$on("loaderDebounceRemove", function () {
+      if (_this.$refs.loaderDebounce.classList.contains('loaderTransition')) {
+        _this.$refs.loaderDebounce.classList.remove('loaderTransition');
+      }
+    });
+    this.$bus.$on("loaderDebounceAdd", function () {
+      _this.$refs.loaderDebounce.classList.add('loaderTransition');
     });
   },
   computed: {
@@ -6850,7 +6865,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".notes {\n  height: 90vh;\n}\n.notesList {\n  border-right: solid #dddddd 2px;\n}\n.addBtn {\n  position: absolute;\n  top: 10px;\n  right: 10px;\n}\n.addSvg {\n  width: 17px;\n  height: auto;\n  fill: #3182ce;\n}\n.addBtn:hover .addSvg {\n  fill: white;\n}", ""]);
+exports.push([module.i, ".notes {\n  height: 90vh;\n}\n.notesList {\n  border-right: solid #dddddd 2px;\n}\n.addBtn {\n  position: absolute;\n  top: 10px;\n  right: 10px;\n}\n.addSvg {\n  width: 17px;\n  height: auto;\n  fill: #3182ce;\n}\n.addBtn:hover .addSvg {\n  fill: white;\n}\n.loaderDebounce {\n  height: 2px;\n  width: 0;\n  background-color: blue;\n}\n.loaderTransition {\n  -webkit-animation: linear loaderDeb 1.8s;\n          animation: linear loaderDeb 1.8s;\n}\n@-webkit-keyframes loaderDeb {\n0% {\n    width: 0;\n}\n100% {\n    width: 100%;\n}\n}\n@keyframes loaderDeb {\n0% {\n    width: 0;\n}\n100% {\n    width: 100%;\n}\n}", ""]);
 
 // exports
 
@@ -39101,6 +39116,8 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("hr"),
+        _vm._v(" "),
+        _c("div", { ref: "loaderDebounce", staticClass: "loaderDebounce" }),
         _vm._v(" "),
         _c("NoteEdit")
       ],
