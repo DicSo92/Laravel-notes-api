@@ -42,10 +42,9 @@ export default new Vuex.Store({
                 })
                 .catch(error => {
                     console.log(error.message)
-                    // dispatch('anotherAction')
                 })
         },
-        deleteNote ({commit, dispatch}, id) {
+        deleteNote ({commit, dispatch, state}, id) {
             commit('changeLoadingText', 'Deleting')
             commit('toggleLoading')
             axios.delete(`/api/notes/${id}`)
@@ -60,11 +59,11 @@ export default new Vuex.Store({
                         type: 'success'
                     });
                     dispatch('refreshNotes')
-                    // this.$bus.$emit("refreshNotes")
 
-                    if (this.noteEdit && this.noteEdit.id === id) {
+                    if (state.noteEdit && state.noteEdit.id === id) {
                         commit('changeStatus', 'new')
                         commit('changeFirst', true)
+                        commit('changeNoteEdit', {content: ''})
                     }
                 })
                 .catch(error => {
@@ -101,7 +100,6 @@ export default new Vuex.Store({
                         commit('toggleLoading')
 
                         dispatch('refreshNotes')
-                        // this.$bus.$emit("refreshNotes") // Refresh notes
                     })
                     .catch(error => {
                         console.log(error);
@@ -131,7 +129,6 @@ export default new Vuex.Store({
                         commit('toggleLoading')
 
                         dispatch('refreshNotes')
-                        // this.$bus.$emit("refreshNotes") // Refresh notes
                     })
                     .catch(error => {
                         console.log(error);

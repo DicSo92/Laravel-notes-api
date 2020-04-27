@@ -61836,14 +61836,13 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
         console.log(response);
         commit("changeNotes", response.data.data);
       })["catch"](function (error) {
-        console.log(error.message); // dispatch('anotherAction')
+        console.log(error.message);
       });
     },
     deleteNote: function deleteNote(_ref2, id) {
-      var _this = this;
-
       var commit = _ref2.commit,
-          dispatch = _ref2.dispatch;
+          dispatch = _ref2.dispatch,
+          state = _ref2.state;
       commit('changeLoadingText', 'Deleting');
       commit('toggleLoading');
       axios__WEBPACK_IMPORTED_MODULE_2___default.a["delete"]("/api/notes/".concat(id)).then(function (response) {
@@ -61855,11 +61854,14 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
           text: 'Note succesfully Deleted !',
           type: 'success'
         });
-        dispatch('refreshNotes'); // this.$bus.$emit("refreshNotes")
+        dispatch('refreshNotes');
 
-        if (_this.noteEdit && _this.noteEdit.id === id) {
+        if (state.noteEdit && state.noteEdit.id === id) {
           commit('changeStatus', 'new');
           commit('changeFirst', true);
+          commit('changeNoteEdit', {
+            content: ''
+          });
         }
       })["catch"](function (error) {
         console.log(error);
@@ -61894,7 +61896,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
           commit('changeFirst', false);
           commit('changeNoteEdit', response.data.data);
           commit('toggleLoading');
-          dispatch('refreshNotes'); // this.$bus.$emit("refreshNotes") // Refresh notes
+          dispatch('refreshNotes');
         })["catch"](function (error) {
           console.log(error);
           commit('toggleLoading');
@@ -61918,7 +61920,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
           });
           commit('changeFirst', false);
           commit('toggleLoading');
-          dispatch('refreshNotes'); // this.$bus.$emit("refreshNotes") // Refresh notes
+          dispatch('refreshNotes');
         })["catch"](function (error) {
           console.log(error);
           commit('toggleLoading');
