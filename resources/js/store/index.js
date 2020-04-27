@@ -36,7 +36,34 @@ export default new Vuex.Store({
                     console.log(error.message)
                     // dispatch('anotherAction')
                 })
-        }
+        },
+        deleteNote ({commit, dispatch}, id) {
+            axios.delete(`/api/notes/${id}`)
+                .then(response => {
+                    Vue.notify({
+                        group: 'notif',
+                        title: 'Success !',
+                        text: 'Note succesfully Deleted !',
+                        type: 'success'
+                    });
+                    dispatch('refreshNotes')
+                    // this.$bus.$emit("refreshNotes")
+
+                    if (this.noteEdit && this.noteEdit.id === id) {
+                        commit('changeStatus', 'new')
+                        commit('changeFirst', true)
+                    }
+                })
+                .catch(error => {
+                    console.log(error)
+                    Vue.notify({
+                        group: 'notif',
+                        title: 'Error, something went wrong !',
+                        text: error.message,
+                        type: 'error'
+                    });
+                })
+        },
     },
     modules: {}
 })

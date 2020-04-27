@@ -35,30 +35,7 @@
         },
         methods: {
             deleteNote (id) {
-                axios.delete(`/api/notes/${id}`)
-                    .then(response => {
-                        this.$notify({
-                            group: 'notif',
-                            title: 'Success !',
-                            text: 'Note succesfully Deleted !',
-                            type: 'success'
-                        });
-                        this.$bus.$emit("refreshNotes")
-
-                        if (this.noteEdit && this.noteEdit.id === id) {
-                            this.$store.commit('changeStatus', 'new')
-                            this.$store.commit('changeFirst', true)
-                        }
-                    })
-                    .catch(error => {
-                        console.log(error)
-                        this.$notify({
-                            group: 'notif',
-                            title: 'Error, something went wrong !',
-                            text: error.message,
-                            type: 'error'
-                        });
-                    })
+                this.$store.dispatch('deleteNote', id)
             },
             showNote (note) {
                 this.$store.commit('changeStatus', 'edit')

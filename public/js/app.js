@@ -2174,33 +2174,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     deleteNote: function deleteNote(id) {
-      var _this = this;
-
-      axios["delete"]("/api/notes/".concat(id)).then(function (response) {
-        _this.$notify({
-          group: 'notif',
-          title: 'Success !',
-          text: 'Note succesfully Deleted !',
-          type: 'success'
-        });
-
-        _this.$bus.$emit("refreshNotes");
-
-        if (_this.noteEdit && _this.noteEdit.id === id) {
-          _this.$store.commit('changeStatus', 'new');
-
-          _this.$store.commit('changeFirst', true);
-        }
-      })["catch"](function (error) {
-        console.log(error);
-
-        _this.$notify({
-          group: 'notif',
-          title: 'Error, something went wrong !',
-          text: error.message,
-          type: 'error'
-        });
-      });
+      this.$store.dispatch('deleteNote', id);
     },
     showNote: function showNote(note) {
       this.$store.commit('changeStatus', 'edit');
@@ -57039,6 +57013,34 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
         commit("changeNotes", response.data.data);
       })["catch"](function (error) {
         console.log(error.message); // dispatch('anotherAction')
+      });
+    },
+    deleteNote: function deleteNote(_ref2, id) {
+      var _this = this;
+
+      var commit = _ref2.commit,
+          dispatch = _ref2.dispatch;
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a["delete"]("/api/notes/".concat(id)).then(function (response) {
+        vue__WEBPACK_IMPORTED_MODULE_0___default.a.notify({
+          group: 'notif',
+          title: 'Success !',
+          text: 'Note succesfully Deleted !',
+          type: 'success'
+        });
+        dispatch('refreshNotes'); // this.$bus.$emit("refreshNotes")
+
+        if (_this.noteEdit && _this.noteEdit.id === id) {
+          commit('changeStatus', 'new');
+          commit('changeFirst', true);
+        }
+      })["catch"](function (error) {
+        console.log(error);
+        vue__WEBPACK_IMPORTED_MODULE_0___default.a.notify({
+          group: 'notif',
+          title: 'Error, something went wrong !',
+          text: error.message,
+          type: 'error'
+        });
       });
     }
   },
