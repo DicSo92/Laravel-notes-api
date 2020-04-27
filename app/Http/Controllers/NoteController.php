@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Note;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class NoteController extends ApiController
 {
@@ -14,7 +15,8 @@ class NoteController extends ApiController
      */
     public function index()
     {
-        $notes = Note::all();
+//        $notes = Note::all()->orderBy('updated_at', 'desc');
+        $notes = Note::orderBy('updated_at', 'desc')->get();
         return $this->success($notes);
     }
 
