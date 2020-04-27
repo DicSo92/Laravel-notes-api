@@ -1926,6 +1926,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Index',
   components: {},
@@ -6880,7 +6881,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".notes {\n  height: 90vh;\n}\n.notesList {\n  border-right: solid #dddddd 2px;\n}\n.addBtn {\n  position: absolute;\n  top: 10px;\n  right: 10px;\n}\n.addSvg {\n  width: 17px;\n  height: auto;\n  fill: #3182ce;\n}\n.addBtn:hover .addSvg {\n  fill: white;\n}\n.loaderDebounce {\n  height: 2px;\n  width: 0;\n  background-color: blue;\n}\n.loaderTransition {\n  -webkit-animation: linear loaderDeb 1.8s;\n          animation: linear loaderDeb 1.8s;\n}\n@-webkit-keyframes loaderDeb {\n0% {\n    width: 0;\n}\n100% {\n    width: 100%;\n}\n}\n@keyframes loaderDeb {\n0% {\n    width: 0;\n}\n100% {\n    width: 100%;\n}\n}\n.loaderUploadContainer {\n  position: absolute;\n  transform: translateY(-50%);\n  top: 50%;\n  left: 0;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.lds-ring {\n  display: inline-block;\n  position: relative;\n  width: 20px;\n  height: 20px;\n  padding-top: 2px;\n}\n.lds-ring div {\n  box-sizing: border-box;\n  display: block;\n  position: absolute;\n  width: 16px;\n  height: 16px;\n  border: 2px solid #ed8936;\n  border-radius: 50%;\n  -webkit-animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;\n          animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;\n  border-color: #ed8936 transparent transparent transparent;\n}\n.lds-ring div:nth-child(1) {\n  -webkit-animation-delay: -0.45s;\n          animation-delay: -0.45s;\n}\n.lds-ring div:nth-child(2) {\n  -webkit-animation-delay: -0.3s;\n          animation-delay: -0.3s;\n}\n.lds-ring div:nth-child(3) {\n  -webkit-animation-delay: -0.15s;\n          animation-delay: -0.15s;\n}\n@-webkit-keyframes lds-ring {\n0% {\n    transform: rotate(0deg);\n}\n100% {\n    transform: rotate(360deg);\n}\n}\n@keyframes lds-ring {\n0% {\n    transform: rotate(0deg);\n}\n100% {\n    transform: rotate(360deg);\n}\n}", ""]);
+exports.push([module.i, ".notesList {\n  border-right: solid #dddddd 2px;\n}\n.addBtn {\n  position: absolute;\n  top: 10px;\n  right: 10px;\n}\n.addSvg {\n  width: 17px;\n  height: auto;\n  fill: #3182ce;\n}\n.addBtn:hover .addSvg {\n  fill: white;\n}\n.loaderDebounce {\n  height: 2px;\n  width: 0;\n  background-color: blue;\n}\n.loaderTransition {\n  -webkit-animation: linear loaderDeb 1.8s;\n          animation: linear loaderDeb 1.8s;\n}\n@-webkit-keyframes loaderDeb {\n0% {\n    width: 0;\n}\n100% {\n    width: 100%;\n}\n}\n@keyframes loaderDeb {\n0% {\n    width: 0;\n}\n100% {\n    width: 100%;\n}\n}\n.loaderUploadContainer {\n  position: absolute;\n  transform: translateY(-50%);\n  top: 50%;\n  left: 0;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.lds-ring {\n  display: inline-block;\n  position: relative;\n  width: 20px;\n  height: 20px;\n  padding-top: 2px;\n}\n.lds-ring div {\n  box-sizing: border-box;\n  display: block;\n  position: absolute;\n  width: 16px;\n  height: 16px;\n  border: 2px solid #ed8936;\n  border-radius: 50%;\n  -webkit-animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;\n          animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;\n  border-color: #ed8936 transparent transparent transparent;\n}\n.lds-ring div:nth-child(1) {\n  -webkit-animation-delay: -0.45s;\n          animation-delay: -0.45s;\n}\n.lds-ring div:nth-child(2) {\n  -webkit-animation-delay: -0.3s;\n          animation-delay: -0.3s;\n}\n.lds-ring div:nth-child(3) {\n  -webkit-animation-delay: -0.15s;\n          animation-delay: -0.15s;\n}\n@-webkit-keyframes lds-ring {\n0% {\n    transform: rotate(0deg);\n}\n100% {\n    transform: rotate(360deg);\n}\n}\n@keyframes lds-ring {\n0% {\n    transform: rotate(0deg);\n}\n100% {\n    transform: rotate(360deg);\n}\n}", ""]);
 
 // exports
 
@@ -6899,7 +6900,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, ".link:hover {\n  color: indianred;\n  cursor: pointer;\n}\n.fade-enter-active, .fade-leave-active {\n  transition: opacity .5s;\n}\n.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {\n  opacity: 0;\n}\n.vue-notification {\n  padding: 13px;\n  margin: 10px;\n  font-size: 15px;\n  color: #ffffff;\n  background: #44A4FC;\n  border-left: 5px solid #187FE7;\n&.warn {\n    background: #ffb648;\n    border-left-color: #f48a06;\n}\n&.error {\n    background: #E54D42;\n    border-left-color: #B82E24;\n}\n&.success {\n    background: #68CD86;\n    border-left-color: #42A85F;\n}\n}\n", ""]);
+exports.push([module.i, ".index {\n  height: 100vh;\n}\n.link:hover {\n  color: indianred;\n  cursor: pointer;\n}\n.fade-enter-active, .fade-leave-active {\n  transition: opacity .5s;\n}\n.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {\n  opacity: 0;\n}\n.vue-notification {\n  padding: 13px;\n  margin: 10px;\n  font-size: 15px;\n  color: #ffffff;\n  background: #44A4FC;\n  border-left: 5px solid #187FE7;\n&.warn {\n    background: #ffb648;\n    border-left-color: #f48a06;\n}\n&.error {\n    background: #E54D42;\n    border-left-color: #B82E24;\n}\n&.success {\n    background: #68CD86;\n    border-left-color: #42A85F;\n}\n}\n", ""]);
 
 // exports
 
@@ -38757,7 +38758,7 @@ var render = function() {
           ],
           1
         ),
-        _vm._v("\n        |\n        "),
+        _vm._v("\n            |\n            "),
         _c(
           "p",
           { staticClass: "mx-2 link" },
@@ -38779,7 +38780,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "md:w-4/5 w-11/12 " },
+        { staticClass: "w-full h-full" },
         [
           _c("notifications", {
             attrs: { group: "notif", position: "bottom right" }
@@ -39075,7 +39076,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "notes w-full flex bg-gray-100" }, [
+  return _c("div", { staticClass: "notes w-full h-full flex bg-gray-100" }, [
     _c(
       "div",
       { staticClass: "notesList w-4/12" },

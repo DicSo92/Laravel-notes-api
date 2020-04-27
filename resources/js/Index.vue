@@ -9,7 +9,8 @@
                 <router-link :to="{ name: 'notes'}" exact-active-class="text-blue-400">Notes</router-link>
             </p>
         </div>
-        <div class="md:w-4/5 w-11/12 ">
+<!--        <div class="md:w-4/5 w-11/12 ">-->
+        <div class="w-full h-full">
             <notifications group="notif" position="bottom right"/>
             <router-view></router-view>
         </div>
@@ -35,6 +36,9 @@
 </script>
 
 <style type="scss">
+    .index {
+        height: 100vh;
+    }
     .link:hover {
         color: indianred;
         cursor: pointer;
