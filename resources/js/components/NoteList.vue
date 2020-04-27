@@ -56,7 +56,7 @@
 
 <style scoped lang="scss">
     .NoteList {
-        overflow-y: scroll;
+        overflow-y: auto;
     }
     .listItem {
         border-bottom: solid #dddddd 1px
@@ -89,5 +89,16 @@
     }
     .transitionItem {
         transition: all 0.5s;
+    }
+
+    .NoteList::-webkit-scrollbar {
+        width:10px; // manage scrollbar width here
+    }
+    .NoteList::-webkit-scrollbar * {
+        background:transparent; // manage scrollbar background color here
+    }
+    .NoteList::-webkit-scrollbar-thumb {
+        border-radius: 20px;
+        background:rgba(200,200,200,200.1) !important; // manage scrollbar thumb background color here
     }
 </style>
