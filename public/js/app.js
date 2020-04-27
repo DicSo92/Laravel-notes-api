@@ -1990,7 +1990,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "NoteEdit",
-  props: ['status', 'noteEdit', 'first'],
+  props: ['noteEdit', 'first'],
   data: function data() {
     return {
       textContent: ''
@@ -2023,6 +2023,11 @@ __webpack_require__.r(__webpack_exports__);
     status: function status(newStatus, oldStatus) {
       if (newStatus === 'new') this.textContent = '';
       if (newStatus === 'edit') this.textContent = this.noteEdit.content;
+    }
+  },
+  computed: {
+    status: function status() {
+      return this.$store.state.status;
     }
   },
   methods: {
@@ -2268,7 +2273,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      status: 'new',
       noteEdit: null,
       first: true,
       notes: null
@@ -2284,13 +2288,15 @@ __webpack_require__.r(__webpack_exports__);
       _this.getNotes();
     });
     this.$bus.$on("noteAdded", function (note) {
-      _this.status = 'edit';
+      _this.$store.commit('changeStatus', 'edit');
+
       _this.first = false;
       _this.noteEdit = note;
     });
     this.$bus.$on("showNote", function (note) {
+      _this.$store.commit('changeStatus', 'edit');
+
       _this.first = true;
-      _this.status = 'edit';
       _this.noteEdit = note;
     });
     this.$bus.$on("first", function (status) {
@@ -2298,10 +2304,16 @@ __webpack_require__.r(__webpack_exports__);
     });
     this.$bus.$on("deleteNote", function (id) {
       if (_this.noteEdit && _this.noteEdit.id === id) {
+        _this.$store.commit('changeStatus', 'new');
+
         _this.first = true;
-        _this.status = 'new';
       }
     });
+  },
+  computed: {
+    status: function status() {
+      return this.$store.state.status;
+    }
   },
   methods: {
     getNotes: function getNotes() {
@@ -2316,7 +2328,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     addNote: function addNote() {
       this.first = true;
-      this.status = 'new';
+      this.$store.commit('changeStatus', 'new');
       this.$bus.$emit("changeTextContent", '');
     }
   }
@@ -56887,11 +56899,11 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
-    page: null
+    status: 'new'
   },
   mutations: {
-    changePage: function changePage(state, val) {
-      state.page = val;
+    changeStatus: function changeStatus(state, val) {
+      state.status = val;
     }
   },
   actions: {},

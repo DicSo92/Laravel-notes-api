@@ -9,7 +9,6 @@
     export default {
         name: "NoteEdit",
         props: [
-            'status',
             'noteEdit',
             'first'
         ],
@@ -46,6 +45,11 @@
             status: function (newStatus, oldStatus) {
                 if (newStatus === 'new') this.textContent = ''
                 if (newStatus === 'edit') this.textContent = this.noteEdit.content
+            }
+        },
+        computed: {
+            status () {
+                return this.$store.state.status
             }
         },
         methods: {

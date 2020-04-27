@@ -40,7 +40,6 @@
         },
         data () {
             return {
-                status: 'new',
                 noteEdit: null,
                 first: true,
 
@@ -55,13 +54,13 @@
                 this.getNotes()
             })
             this.$bus.$on("noteAdded", note => {
-                this.status = 'edit'
+                this.$store.commit('changeStatus', 'edit')
                 this.first = false
                 this.noteEdit = note
             })
             this.$bus.$on("showNote", note => {
+                this.$store.commit('changeStatus', 'edit')
                 this.first = true
-                this.status = 'edit'
                 this.noteEdit = note
             })
             this.$bus.$on("first", status => {
@@ -69,10 +68,15 @@
             })
             this.$bus.$on("deleteNote", id => {
                 if (this.noteEdit && this.noteEdit.id === id) {
+                    this.$store.commit('changeStatus', 'new')
                     this.first = true
-                    this.status = 'new'
                 }
             })
+        },
+        computed: {
+            status () {
+                return this.$store.state.status
+            }
         },
         methods: {
             getNotes () {
@@ -88,7 +92,7 @@
             },
             addNote () {
                 this.first = true
-                this.status = 'new'
+                this.$store.commit('changeStatus', 'new')
                 this.$bus.$emit("changeTextContent", '')
             }
         }
