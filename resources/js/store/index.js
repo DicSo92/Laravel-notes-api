@@ -11,7 +11,8 @@ export default new Vuex.Store({
         noteEdit: null,
         notes: null,
         loading: false,
-        loadingText: ''
+        loadingText: '',
+        listHeight: 100
     },
     mutations: {
         changeStatus(state, val) {
@@ -31,6 +32,9 @@ export default new Vuex.Store({
         },
         changeLoadingText(state, val) {
             state.loadingText = val
+        },
+        changeListHeight(state, val) {
+            state.listHeight = val
         },
     },
     actions: {

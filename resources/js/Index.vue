@@ -38,6 +38,7 @@
 <style type="scss">
     .index {
         height: 100vh;
+        overflow-y: hidden;
     }
     .link:hover {
         color: indianred;

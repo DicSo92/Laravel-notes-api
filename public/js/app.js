@@ -2108,12 +2108,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "NoteList",
   props: [],
+  watch: {
+    listHeight: function listHeight(newData, oldData) {
+      this.$refs.list.style.height = "".concat(newData, "px");
+    }
+  },
   computed: {
     noteEdit: function noteEdit() {
       return this.$store.state.noteEdit;
     },
     notes: function notes() {
       return this.$store.state.notes;
+    },
+    listHeight: function listHeight() {
+      return this.$store.state.listHeight;
     }
   },
   methods: {
@@ -2257,6 +2265,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
+    this.$store.commit('changeListHeight', document.body.clientHeight - this.$refs.hr.offsetTop);
     this.$bus.$on("refreshNotes", function () {
       _this.$store.dispatch('refreshNotes');
     });
@@ -6862,7 +6871,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".listItem[data-v-7c04491b] {\n  border-bottom: solid #dddddd 1px;\n}\n.trashBtn[data-v-7c04491b] {\n  position: absolute;\n  top: 10px;\n  right: 10px;\n}\n.trashSvg[data-v-7c04491b] {\n  width: 17px;\n  height: auto;\n  fill: #e53e3e;\n}\n.trashBtn:hover .trashSvg[data-v-7c04491b] {\n  fill: white;\n}\n.list-enter[data-v-7c04491b], .list-leave-to[data-v-7c04491b] {\n  opacity: 0;\n  transform: translateX(-50px);\n}\n.list-leave-active[data-v-7c04491b] {\n  position: absolute;\n  /*z-index: 10;*/\n}\n.list-move[data-v-7c04491b] {\n  transition: transform 0.5s;\n}\n.transitionItem[data-v-7c04491b] {\n  transition: all 0.5s;\n}", ""]);
+exports.push([module.i, ".NoteList[data-v-7c04491b] {\n  overflow-y: scroll;\n}\n.listItem[data-v-7c04491b] {\n  border-bottom: solid #dddddd 1px;\n}\n.trashBtn[data-v-7c04491b] {\n  position: absolute;\n  top: 10px;\n  right: 10px;\n}\n.trashSvg[data-v-7c04491b] {\n  width: 17px;\n  height: auto;\n  fill: #e53e3e;\n}\n.trashBtn:hover .trashSvg[data-v-7c04491b] {\n  fill: white;\n}\n.list-enter[data-v-7c04491b], .list-leave-to[data-v-7c04491b] {\n  opacity: 0;\n  transform: translateX(-50px);\n}\n.list-leave-active[data-v-7c04491b] {\n  position: absolute;\n  /*z-index: 10;*/\n}\n.list-move[data-v-7c04491b] {\n  transition: transform 0.5s;\n}\n.transitionItem[data-v-7c04491b] {\n  transition: all 0.5s;\n}", ""]);
 
 // exports
 
@@ -6900,7 +6909,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, ".index {\n  height: 100vh;\n}\n.link:hover {\n  color: indianred;\n  cursor: pointer;\n}\n.fade-enter-active, .fade-leave-active {\n  transition: opacity .5s;\n}\n.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {\n  opacity: 0;\n}\n.vue-notification {\n  padding: 13px;\n  margin: 10px;\n  font-size: 15px;\n  color: #ffffff;\n  background: #44A4FC;\n  border-left: 5px solid #187FE7;\n&.warn {\n    background: #ffb648;\n    border-left-color: #f48a06;\n}\n&.error {\n    background: #E54D42;\n    border-left-color: #B82E24;\n}\n&.success {\n    background: #68CD86;\n    border-left-color: #42A85F;\n}\n}\n", ""]);
+exports.push([module.i, ".index {\n  height: 100vh;\n  overflow-y: hidden;\n}\n.link:hover {\n  color: indianred;\n  cursor: pointer;\n}\n.fade-enter-active, .fade-leave-active {\n  transition: opacity .5s;\n}\n.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {\n  opacity: 0;\n}\n.vue-notification {\n  padding: 13px;\n  margin: 10px;\n  font-size: 15px;\n  color: #ffffff;\n  background: #44A4FC;\n  border-left: 5px solid #187FE7;\n&.warn {\n    background: #ffb648;\n    border-left-color: #f48a06;\n}\n&.error {\n    background: #E54D42;\n    border-left-color: #B82E24;\n}\n&.success {\n    background: #68CD86;\n    border-left-color: #42A85F;\n}\n}\n", ""]);
 
 // exports
 
@@ -38919,7 +38928,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "NoteList" },
+    { ref: "list", staticClass: "NoteList" },
     [
       _c(
         "transition-group",
@@ -39083,7 +39092,7 @@ var render = function() {
       [
         _c("h3", { staticClass: "m-3 font-bold" }, [_vm._v("Notes List :")]),
         _vm._v(" "),
-        _c("hr"),
+        _c("hr", { ref: "hr", staticClass: "test" }),
         _vm._v(" "),
         _c("NoteList")
       ],
@@ -61807,7 +61816,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     noteEdit: null,
     notes: null,
     loading: false,
-    loadingText: ''
+    loadingText: '',
+    listHeight: 100
   },
   mutations: {
     changeStatus: function changeStatus(state, val) {
@@ -61827,6 +61837,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     },
     changeLoadingText: function changeLoadingText(state, val) {
       state.loadingText = val;
+    },
+    changeListHeight: function changeListHeight(state, val) {
+      state.listHeight = val;
     }
   },
   actions: {

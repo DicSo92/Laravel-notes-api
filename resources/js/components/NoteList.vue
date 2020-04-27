@@ -1,5 +1,5 @@
 <template>
-    <div class="NoteList">
+    <div class="NoteList" ref="list">
 
         <transition-group name="list" tag="div">
             <div class="listItem p-3 flex flex-col relative hover:bg-gray-200 cursor-pointer transitionItem"
@@ -25,12 +25,20 @@
     export default {
         name: "NoteList",
         props: [],
+        watch: {
+            listHeight (newData, oldData) {
+                this.$refs.list.style.height = `${newData}px`
+            }
+        },
         computed: {
             noteEdit () {
                 return this.$store.state.noteEdit
             },
             notes () {
                 return this.$store.state.notes
+            },
+            listHeight () {
+                return this.$store.state.listHeight
             }
         },
         methods: {
@@ -47,6 +55,9 @@
 </script>
 
 <style scoped lang="scss">
+    .NoteList {
+        overflow-y: scroll;
+    }
     .listItem {
         border-bottom: solid #dddddd 1px
     }

@@ -3,7 +3,7 @@
         <div class="notesList w-4/12">
             <h3 class="m-3 font-bold">Notes List :</h3>
 
-            <hr>
+            <hr ref="hr" class="test">
 
             <NoteList></NoteList>
         </div>
@@ -53,6 +53,8 @@
             this.$store.dispatch('refreshNotes')
         },
         mounted() {
+            this.$store.commit('changeListHeight', document.body.clientHeight - this.$refs.hr.offsetTop)
+
             this.$bus.$on("refreshNotes", () => {
                 this.$store.dispatch('refreshNotes')
             })
