@@ -38,7 +38,9 @@
                     })
                         .then(response => {
                             console.log(response);
-                            this.$bus.$emit("refreshNotes", response.data)
+                            this.$bus.$emit("noteAdded") // set status to 'edit'
+                            this.$bus.$emit("refreshNotes") // Refresh notes
+
                             this.$bus.$emit("showAlert", {positive: true, alerts: ["Task successfully added"]})
                         })
                         .catch(error => {

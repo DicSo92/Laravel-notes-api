@@ -2017,7 +2017,11 @@ __webpack_require__.r(__webpack_exports__);
         }).then(function (response) {
           console.log(response);
 
-          _this.$bus.$emit("refreshNotes", response.data);
+          _this.$bus.$emit("noteAdded"); // set status to 'edit'
+
+
+          _this.$bus.$emit("refreshNotes"); // Refresh notes
+
 
           _this.$bus.$emit("showAlert", {
             positive: true,
@@ -2062,8 +2066,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "NoteList"
+  name: "NoteList",
+  props: ['notes'],
+  methods: {
+    deleteNote: function deleteNote(id) {
+      var _this = this;
+
+      axios["delete"]("/api/notes/".concat(id)).then(function (response) {
+        _this.$bus.$emit("refreshNotes");
+
+        _this.$bus.$emit("showAlert", {
+          positive: true,
+          alerts: ["Task successfully deleted"]
+        });
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -2177,14 +2199,35 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      status: 'new'
+      status: 'new',
+      notes: null
     };
   },
-  created: function created() {},
-  mounted: function mounted() {
-    console.log('Vue Notes mounted.');
+  created: function created() {
+    this.getNotes();
   },
-  methods: {}
+  mounted: function mounted() {
+    var _this = this;
+
+    this.$bus.$on("refreshNotes", function () {
+      _this.getNotes();
+    });
+    this.$bus.$on("noteAdded", function () {
+      _this.status = 'edit';
+    });
+  },
+  methods: {
+    getNotes: function getNotes() {
+      var _this2 = this;
+
+      axios.get("/api/notes").then(function (response) {
+        console.log(response);
+        _this2.notes = response.data.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -38731,52 +38774,58 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "NoteList" }, [
-    _c(
-      "div",
-      {
-        staticClass:
-          "listItem p-3 flex flex-col relative hover:bg-gray-200 cursor-pointer"
-      },
-      [
-        _c("h6", { staticClass: "font-bold" }, [_vm._v("18:06")]),
-        _vm._v(" "),
-        _c("p", [
-          _vm._v(
-            "Doloremque enim, facere hic inventore ipsam minus molestiae nobis officiis quae quam, quibusdam sunt velit voluptate!"
-          )
-        ]),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass:
-              "bg-transparent hover:bg-red-500 font-semibold hover:text-white p-1 border border-red-600 hover:border-transparent rounded-full trashBtn"
-          },
-          [
-            _c(
-              "svg",
-              {
-                staticClass: "trashSvg",
-                attrs: {
-                  xmlns: "http://www.w3.org/2000/svg",
-                  viewBox: "0 0 512 512"
+  return _c(
+    "div",
+    { staticClass: "NoteList" },
+    _vm._l(_vm.notes, function(note) {
+      return _c(
+        "div",
+        {
+          staticClass:
+            "listItem p-3 flex flex-col relative hover:bg-gray-200 cursor-pointer"
+        },
+        [
+          _c("h6", { staticClass: "font-bold" }, [_vm._v("18:06")]),
+          _vm._v(" "),
+          _c("p", [_vm._v(_vm._s(note.content))]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass:
+                "bg-transparent hover:bg-red-500 font-semibold hover:text-white p-1 border border-red-600 hover:border-transparent rounded-full trashBtn",
+              on: {
+                click: function($event) {
+                  return _vm.deleteNote(note.id)
                 }
-              },
-              [
-                _c("path", {
+              }
+            },
+            [
+              _c(
+                "svg",
+                {
+                  staticClass: "trashSvg",
                   attrs: {
-                    d:
-                      "M128 405.429C128 428.846 147.198 448 170.667 448h170.667C364.802 448 384 428.846 384 405.429V160H128v245.429zM416 96h-80l-26.785-32H202.786L176 96H96v32h320V96z"
+                    xmlns: "http://www.w3.org/2000/svg",
+                    viewBox: "0 0 512 512"
                   }
-                })
-              ]
-            )
-          ]
-        )
-      ]
-    )
-  ])
+                },
+                [
+                  _c("path", {
+                    attrs: {
+                      d:
+                        "M128 405.429C128 428.846 147.198 448 170.667 448h170.667C364.802 448 384 428.846 384 405.429V160H128v245.429zM416 96h-80l-26.785-32H202.786L176 96H96v32h320V96z"
+                    }
+                  })
+                ]
+              )
+            ]
+          )
+        ]
+      )
+    }),
+    0
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -38873,7 +38922,7 @@ var render = function() {
         _vm._v(" "),
         _c("hr"),
         _vm._v(" "),
-        _c("NoteList")
+        _c("NoteList", { attrs: { notes: _vm.notes } })
       ],
       1
     ),

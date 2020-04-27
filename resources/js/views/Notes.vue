@@ -5,7 +5,7 @@
 
             <hr>
 
-            <NoteList></NoteList>
+            <NoteList :notes="notes"></NoteList>
         </div>
         <div class="w-8/12 flex flex-col">
             <div class="w-full flex justify-center relative">
@@ -37,16 +37,32 @@
         data () {
             return {
                 status: 'new',
+                notes: null
             }
         },
         created() {
-
+            this.getNotes()
         },
         mounted() {
-            console.log('Vue Notes mounted.')
+            this.$bus.$on("refreshNotes", () => {
+                this.getNotes()
+            })
+            this.$bus.$on("noteAdded", () => {
+                this.status = 'edit'
+            })
         },
         methods: {
+            getNotes () {
+                axios.get(`/api/notes`)
+                    .then(response => {
+                        console.log(response);
+                        this.notes = response.data.data
+                    })
+                    .catch(error => {
+                        console.log(error);
 
+                    })
+            }
         }
     }
 </script>
