@@ -2254,6 +2254,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -6897,7 +6899,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".notesList {\n  border-right: solid #dddddd 2px;\n}\n.addBtn {\n  position: absolute;\n  top: 10px;\n  right: 10px;\n}\n.addSvg {\n  width: 17px;\n  height: auto;\n  fill: #3182ce;\n}\n.addBtn:hover .addSvg {\n  fill: white;\n}\n.loaderDebounce {\n  height: 2px;\n  width: 0;\n  background-color: blue;\n}\n.loaderTransition {\n  -webkit-animation: linear loaderDeb 1.8s;\n          animation: linear loaderDeb 1.8s;\n}\n@-webkit-keyframes loaderDeb {\n0% {\n    width: 0;\n}\n100% {\n    width: 100%;\n}\n}\n@keyframes loaderDeb {\n0% {\n    width: 0;\n}\n100% {\n    width: 100%;\n}\n}\n.loaderUploadContainer {\n  position: absolute;\n  transform: translateY(-50%);\n  top: 50%;\n  left: 0;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.lds-ring {\n  display: inline-block;\n  position: relative;\n  width: 20px;\n  height: 20px;\n  padding-top: 2px;\n}\n.lds-ring div {\n  box-sizing: border-box;\n  display: block;\n  position: absolute;\n  width: 16px;\n  height: 16px;\n  border: 2px solid #ed8936;\n  border-radius: 50%;\n  -webkit-animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;\n          animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;\n  border-color: #ed8936 transparent transparent transparent;\n}\n.lds-ring div:nth-child(1) {\n  -webkit-animation-delay: -0.45s;\n          animation-delay: -0.45s;\n}\n.lds-ring div:nth-child(2) {\n  -webkit-animation-delay: -0.3s;\n          animation-delay: -0.3s;\n}\n.lds-ring div:nth-child(3) {\n  -webkit-animation-delay: -0.15s;\n          animation-delay: -0.15s;\n}\n@-webkit-keyframes lds-ring {\n0% {\n    transform: rotate(0deg);\n}\n100% {\n    transform: rotate(360deg);\n}\n}\n@keyframes lds-ring {\n0% {\n    transform: rotate(0deg);\n}\n100% {\n    transform: rotate(360deg);\n}\n}", ""]);
+exports.push([module.i, ".notesList {\n  border-right: solid #dddddd 2px;\n}\n.addBtn {\n  position: absolute;\n  top: 10px;\n  right: 10px;\n}\n.addSvg {\n  width: 17px;\n  height: auto;\n  fill: #3182ce;\n}\n.addBtn:hover .addSvg {\n  fill: white;\n}\n.loaderDebounce {\n  height: 2px;\n  width: 0;\n  background-color: blue;\n}\n.loaderTransition {\n  -webkit-animation: linear loaderDeb 1.8s;\n          animation: linear loaderDeb 1.8s;\n}\n@-webkit-keyframes loaderDeb {\n0% {\n    width: 0;\n}\n100% {\n    width: 100%;\n}\n}\n@keyframes loaderDeb {\n0% {\n    width: 0;\n}\n100% {\n    width: 100%;\n}\n}\n.loaderUploadContainer {\n  position: absolute;\n  transform: translateY(-50%);\n  top: 50%;\n  left: 0;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.lds-ring {\n  display: inline-block;\n  position: relative;\n  width: 20px;\n  height: 20px;\n  padding-top: 2px;\n}\n.lds-ring div {\n  box-sizing: border-box;\n  display: block;\n  position: absolute;\n  width: 16px;\n  height: 16px;\n  border: 2px solid #ed8936;\n  border-radius: 50%;\n  -webkit-animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;\n          animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;\n  border-color: #ed8936 transparent transparent transparent;\n}\n.lds-ring div:nth-child(1) {\n  -webkit-animation-delay: -0.45s;\n          animation-delay: -0.45s;\n}\n.lds-ring div:nth-child(2) {\n  -webkit-animation-delay: -0.3s;\n          animation-delay: -0.3s;\n}\n.lds-ring div:nth-child(3) {\n  -webkit-animation-delay: -0.15s;\n          animation-delay: -0.15s;\n}\n@-webkit-keyframes lds-ring {\n0% {\n    transform: rotate(0deg);\n}\n100% {\n    transform: rotate(360deg);\n}\n}\n@keyframes lds-ring {\n0% {\n    transform: rotate(0deg);\n}\n100% {\n    transform: rotate(360deg);\n}\n}\n.fade-enter-active, .fade-leave-active {\n  transition: opacity 0.5s;\n}\n.fade-enter, .fade-leave-to {\n  opacity: 0;\n}", ""]);
 
 // exports
 
@@ -39111,64 +39113,79 @@ var render = function() {
       "div",
       { staticClass: "w-8/12 flex flex-col" },
       [
-        _c("div", { staticClass: "w-full flex justify-center relative" }, [
-          _c("h3", { staticClass: "m-3 font-bold" }, [
-            _vm._v(
-              "Note (" + _vm._s(_vm.status === "new" ? "New" : "Edit") + ")"
-            )
-          ]),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass:
-                "bg-transparent hover:bg-blue-500 font-semibold hover:text-white p-1 border border-blue-600 hover:border-transparent rounded-full addBtn",
-              on: { click: _vm.addNote }
-            },
-            [
+        _c(
+          "div",
+          { staticClass: "w-full flex justify-center relative" },
+          [
+            _c("h3", { staticClass: "m-3 font-bold" }, [
+              _vm._v(
+                "Note (" + _vm._s(_vm.status === "new" ? "New" : "Edit") + ")"
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass:
+                  "bg-transparent hover:bg-blue-500 font-semibold hover:text-white p-1 border border-blue-600 hover:border-transparent rounded-full addBtn",
+                on: { click: _vm.addNote }
+              },
+              [
+                _c(
+                  "svg",
+                  {
+                    staticClass: "addSvg",
+                    attrs: {
+                      xmlns: "http://www.w3.org/2000/svg",
+                      viewBox: "0 0 512 512"
+                    }
+                  },
+                  [
+                    _c("path", {
+                      attrs: {
+                        d:
+                          "M368.5 240H272v-96.5c0-8.8-7.2-16-16-16s-16 7.2-16 16V240h-96.5c-8.8 0-16 7.2-16 16 0 4.4 1.8 8.4 4.7 11.3 2.9 2.9 6.9 4.7 11.3 4.7H240v96.5c0 4.4 1.8 8.4 4.7 11.3 2.9 2.9 6.9 4.7 11.3 4.7 8.8 0 16-7.2 16-16V272h96.5c8.8 0 16-7.2 16-16s-7.2-16-16-16z"
+                      }
+                    })
+                  ]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c("transition", { attrs: { name: "fade" } }, [
               _c(
-                "svg",
+                "div",
                 {
-                  staticClass: "addSvg",
-                  attrs: {
-                    xmlns: "http://www.w3.org/2000/svg",
-                    viewBox: "0 0 512 512"
-                  }
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.loading,
+                      expression: "loading"
+                    }
+                  ],
+                  staticClass: "loaderUploadContainer ml-3"
                 },
                 [
-                  _c("path", {
-                    attrs: {
-                      d:
-                        "M368.5 240H272v-96.5c0-8.8-7.2-16-16-16s-16 7.2-16 16V240h-96.5c-8.8 0-16 7.2-16 16 0 4.4 1.8 8.4 4.7 11.3 2.9 2.9 6.9 4.7 11.3 4.7H240v96.5c0 4.4 1.8 8.4 4.7 11.3 2.9 2.9 6.9 4.7 11.3 4.7 8.8 0 16-7.2 16-16V272h96.5c8.8 0 16-7.2 16-16s-7.2-16-16-16z"
-                    }
-                  })
+                  _c("div", { staticClass: "lds-ring" }, [
+                    _c("div"),
+                    _vm._v(" "),
+                    _c("div"),
+                    _vm._v(" "),
+                    _c("div"),
+                    _vm._v(" "),
+                    _c("div")
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "text-orange-500 font-bold ml-1" }, [
+                    _vm._v(_vm._s(_vm.loadingText) + "...")
+                  ])
                 ]
               )
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.loading,
-                  expression: "loading"
-                }
-              ],
-              staticClass: "loaderUploadContainer ml-3"
-            },
-            [
-              _vm._m(0),
-              _vm._v(" "),
-              _c("p", { staticClass: "text-orange-500 font-bold ml-1" }, [
-                _vm._v(_vm._s(_vm.loadingText) + "...")
-              ])
-            ]
-          )
-        ]),
+            ])
+          ],
+          1
+        ),
         _vm._v(" "),
         _c("hr"),
         _vm._v(" "),
@@ -39180,22 +39197,7 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "lds-ring" }, [
-      _c("div"),
-      _vm._v(" "),
-      _c("div"),
-      _vm._v(" "),
-      _c("div"),
-      _vm._v(" "),
-      _c("div")
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

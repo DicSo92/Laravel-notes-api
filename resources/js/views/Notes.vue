@@ -16,15 +16,17 @@
                         <path d="M368.5 240H272v-96.5c0-8.8-7.2-16-16-16s-16 7.2-16 16V240h-96.5c-8.8 0-16 7.2-16 16 0 4.4 1.8 8.4 4.7 11.3 2.9 2.9 6.9 4.7 11.3 4.7H240v96.5c0 4.4 1.8 8.4 4.7 11.3 2.9 2.9 6.9 4.7 11.3 4.7 8.8 0 16-7.2 16-16V272h96.5c8.8 0 16-7.2 16-16s-7.2-16-16-16z"/>
                     </svg>
                 </button>
-                <div class="loaderUploadContainer ml-3" v-show="loading">
-                    <div class="lds-ring">
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
+                <transition name="fade">
+                    <div class="loaderUploadContainer ml-3" v-show="loading">
+                        <div class="lds-ring">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                        <p class="text-orange-500 font-bold ml-1">{{loadingText}}...</p>
                     </div>
-                    <p class="text-orange-500 font-bold ml-1">{{loadingText}}...</p>
-                </div>
+                </transition>
             </div>
 
             <hr>
@@ -179,5 +181,12 @@
         100% {
             transform: rotate(360deg);
         }
+    }
+
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity .5s;
+    }
+    .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+        opacity: 0;
     }
 </style>
