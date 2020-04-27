@@ -1,14 +1,14 @@
 <template>
-    <div class="NoteList" ref="list">
+    <div class="NoteList bg-gray-100" ref="list">
 
         <transition-group name="list" tag="div">
-            <div class="listItem p-3 flex flex-col relative hover:bg-gray-200 cursor-pointer transitionItem"
+            <div class="listItem px-5 py-3 flex flex-col relative hover:bg-gray-200 bg-white cursor-pointer transitionItem"
                  v-for="note in notes"
                  :key="note.id"
                  :class="noteEdit && note.id === noteEdit.id ? 'bg-orange-300 hover:bg-orange-400' : ''"
                  @click="showNote(note)">
                 <h6 class="font-bold text-gray-800">{{ note.updated_at | moment("calendar") }}</h6>
-                <p>{{note.content}}</p>
+                <p class="noteContent text-gray-700">{{note.content}}</p>
 
                 <button class="bg-transparent hover:bg-red-500 font-semibold hover:text-white p-1 border border-red-600 hover:border-transparent rounded-full trashBtn"
                         @click.stop="deleteNote(note.id)">
@@ -60,7 +60,14 @@
         overflow-y: auto;
     }
     .listItem {
-        border-bottom: solid #dddddd 1px
+        border-bottom: solid #dddddd 1px;
+        box-shadow: 0 3px 8px -3px rgba(128, 128, 128, 1);
+    }
+    .noteContent {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
     .trashBtn {
         position: absolute;

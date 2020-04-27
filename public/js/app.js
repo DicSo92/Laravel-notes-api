@@ -6881,7 +6881,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".NoteList[data-v-7c04491b] {\n  overflow-y: auto;\n}\n.listItem[data-v-7c04491b] {\n  border-bottom: solid #dddddd 1px;\n}\n.trashBtn[data-v-7c04491b] {\n  position: absolute;\n  top: 10px;\n  right: 10px;\n}\n.trashSvg[data-v-7c04491b] {\n  width: 17px;\n  height: auto;\n  fill: #e53e3e;\n}\n.trashBtn:hover .trashSvg[data-v-7c04491b] {\n  fill: white;\n}\n.list-enter[data-v-7c04491b], .list-leave-to[data-v-7c04491b] {\n  opacity: 0;\n  transform: translateX(-50px);\n}\n.list-leave-active[data-v-7c04491b] {\n  position: absolute;\n  /*z-index: 10;*/\n}\n.list-move[data-v-7c04491b] {\n  transition: transform 0.5s;\n}\n.transitionItem[data-v-7c04491b] {\n  transition: all 0.5s;\n}\n.NoteList[data-v-7c04491b]::-webkit-scrollbar {\n  width: 10px;\n}\n.NoteList::-webkit-scrollbar *[data-v-7c04491b] {\n  background: transparent;\n}\n.NoteList[data-v-7c04491b]::-webkit-scrollbar-thumb {\n  border-radius: 20px;\n  background: #c8c8c8 !important;\n}", ""]);
+exports.push([module.i, ".NoteList[data-v-7c04491b] {\n  overflow-y: auto;\n}\n.listItem[data-v-7c04491b] {\n  border-bottom: solid #dddddd 1px;\n  box-shadow: 0 3px 8px -3px gray;\n}\n.noteContent[data-v-7c04491b] {\n  display: -webkit-box;\n  -webkit-line-clamp: 3;\n  -webkit-box-orient: vertical;\n  overflow: hidden;\n}\n.trashBtn[data-v-7c04491b] {\n  position: absolute;\n  top: 10px;\n  right: 10px;\n}\n.trashSvg[data-v-7c04491b] {\n  width: 17px;\n  height: auto;\n  fill: #e53e3e;\n}\n.trashBtn:hover .trashSvg[data-v-7c04491b] {\n  fill: white;\n}\n.list-enter[data-v-7c04491b], .list-leave-to[data-v-7c04491b] {\n  opacity: 0;\n  transform: translateX(-50px);\n}\n.list-leave-active[data-v-7c04491b] {\n  position: absolute;\n  /*z-index: 10;*/\n}\n.list-move[data-v-7c04491b] {\n  transition: transform 0.5s;\n}\n.transitionItem[data-v-7c04491b] {\n  transition: all 0.5s;\n}\n.NoteList[data-v-7c04491b]::-webkit-scrollbar {\n  width: 10px;\n}\n.NoteList::-webkit-scrollbar *[data-v-7c04491b] {\n  background: transparent;\n}\n.NoteList[data-v-7c04491b]::-webkit-scrollbar-thumb {\n  border-radius: 20px;\n  background: #c8c8c8 !important;\n}", ""]);
 
 // exports
 
@@ -6900,7 +6900,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".notesList {\n  border-right: solid #dddddd 2px;\n}\n.addBtn {\n  position: absolute;\n  top: 10px;\n  right: 10px;\n}\n.addSvg {\n  width: 17px;\n  height: auto;\n  fill: #3182ce;\n}\n.addBtn:hover .addSvg {\n  fill: white;\n}\n.loaderDebounce {\n  height: 2px;\n  width: 0;\n  background-color: blue;\n}\n.loaderTransition {\n  -webkit-animation: linear loaderDeb 1.8s;\n          animation: linear loaderDeb 1.8s;\n}\n@-webkit-keyframes loaderDeb {\n0% {\n    width: 0;\n}\n100% {\n    width: 100%;\n}\n}\n@keyframes loaderDeb {\n0% {\n    width: 0;\n}\n100% {\n    width: 100%;\n}\n}\n.loaderUploadContainer {\n  position: absolute;\n  transform: translateY(-50%);\n  top: 50%;\n  left: 0;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.lds-ring {\n  display: inline-block;\n  position: relative;\n  width: 20px;\n  height: 20px;\n  padding-top: 2px;\n}\n.lds-ring div {\n  box-sizing: border-box;\n  display: block;\n  position: absolute;\n  width: 16px;\n  height: 16px;\n  border: 2px solid #ed8936;\n  border-radius: 50%;\n  -webkit-animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;\n          animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;\n  border-color: #ed8936 transparent transparent transparent;\n}\n.lds-ring div:nth-child(1) {\n  -webkit-animation-delay: -0.45s;\n          animation-delay: -0.45s;\n}\n.lds-ring div:nth-child(2) {\n  -webkit-animation-delay: -0.3s;\n          animation-delay: -0.3s;\n}\n.lds-ring div:nth-child(3) {\n  -webkit-animation-delay: -0.15s;\n          animation-delay: -0.15s;\n}\n@-webkit-keyframes lds-ring {\n0% {\n    transform: rotate(0deg);\n}\n100% {\n    transform: rotate(360deg);\n}\n}\n@keyframes lds-ring {\n0% {\n    transform: rotate(0deg);\n}\n100% {\n    transform: rotate(360deg);\n}\n}\n.fade-enter-active, .fade-leave-active {\n  transition: opacity 0.5s;\n}\n.fade-enter, .fade-leave-to {\n  opacity: 0;\n}", ""]);
+exports.push([module.i, ".notes {\n  border-top: 1px solid #dddddd;\n}\n.notesList {\n  border-right: solid #dddddd 2px;\n}\n.addBtn {\n  position: absolute;\n  top: 10px;\n  right: 10px;\n}\n.addSvg {\n  width: 17px;\n  height: auto;\n  fill: #3182ce;\n}\n.addBtn:hover .addSvg {\n  fill: white;\n}\n.loaderDebounce {\n  height: 2px;\n  width: 0;\n  background-color: blue;\n}\n.loaderTransition {\n  -webkit-animation: linear loaderDeb 1.8s;\n          animation: linear loaderDeb 1.8s;\n}\n@-webkit-keyframes loaderDeb {\n0% {\n    width: 0;\n}\n100% {\n    width: 100%;\n}\n}\n@keyframes loaderDeb {\n0% {\n    width: 0;\n}\n100% {\n    width: 100%;\n}\n}\n.loaderUploadContainer {\n  position: absolute;\n  transform: translateY(-50%);\n  top: 50%;\n  left: 0;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.lds-ring {\n  display: inline-block;\n  position: relative;\n  width: 20px;\n  height: 20px;\n  padding-top: 2px;\n}\n.lds-ring div {\n  box-sizing: border-box;\n  display: block;\n  position: absolute;\n  width: 16px;\n  height: 16px;\n  border: 2px solid #ed8936;\n  border-radius: 50%;\n  -webkit-animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;\n          animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;\n  border-color: #ed8936 transparent transparent transparent;\n}\n.lds-ring div:nth-child(1) {\n  -webkit-animation-delay: -0.45s;\n          animation-delay: -0.45s;\n}\n.lds-ring div:nth-child(2) {\n  -webkit-animation-delay: -0.3s;\n          animation-delay: -0.3s;\n}\n.lds-ring div:nth-child(3) {\n  -webkit-animation-delay: -0.15s;\n          animation-delay: -0.15s;\n}\n@-webkit-keyframes lds-ring {\n0% {\n    transform: rotate(0deg);\n}\n100% {\n    transform: rotate(360deg);\n}\n}\n@keyframes lds-ring {\n0% {\n    transform: rotate(0deg);\n}\n100% {\n    transform: rotate(360deg);\n}\n}\n.fade-enter-active, .fade-leave-active {\n  transition: opacity 0.5s;\n}\n.fade-enter, .fade-leave-to {\n  opacity: 0;\n}", ""]);
 
 // exports
 
@@ -38759,43 +38759,49 @@ var render = function() {
     "div",
     { staticClass: "index flex flex-col justify-start items-center relative" },
     [
-      _c("div", { staticClass: "flex justify-center" }, [
-        _c(
-          "p",
-          { staticClass: "mx-2 link" },
-          [
-            _c(
-              "router-link",
-              {
-                attrs: {
-                  to: { name: "home" },
-                  "exact-active-class": "text-blue-400"
-                }
-              },
-              [_vm._v("Home")]
-            )
-          ],
-          1
-        ),
-        _vm._v("\n            |\n            "),
-        _c(
-          "p",
-          { staticClass: "mx-2 link" },
-          [
-            _c(
-              "router-link",
-              {
-                attrs: {
-                  to: { name: "notes" },
-                  "exact-active-class": "text-blue-400"
-                }
-              },
-              [_vm._v("Notes")]
-            )
-          ],
-          1
-        )
-      ]),
+      _c(
+        "div",
+        { staticClass: "flex justify-center w-full bg-gray-900 text-gray-100" },
+        [
+          _c(
+            "p",
+            { staticClass: "mx-2 link" },
+            [
+              _c(
+                "router-link",
+                {
+                  staticClass: "text-gray-100",
+                  attrs: {
+                    to: { name: "home" },
+                    "exact-active-class": "text-blue-400 font-bold"
+                  }
+                },
+                [_vm._v("Home")]
+              )
+            ],
+            1
+          ),
+          _vm._v("\n            |\n            "),
+          _c(
+            "p",
+            { staticClass: "mx-2 link" },
+            [
+              _c(
+                "router-link",
+                {
+                  staticClass: "text-gray-100",
+                  attrs: {
+                    to: { name: "notes" },
+                    "exact-active-class": "text-blue-400 font-bold"
+                  }
+                },
+                [_vm._v("Notes")]
+              )
+            ],
+            1
+          )
+        ]
+      ),
       _vm._v(" "),
       _c(
         "div",
@@ -38939,7 +38945,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { ref: "list", staticClass: "NoteList" },
+    { ref: "list", staticClass: "NoteList bg-gray-100" },
     [
       _c(
         "transition-group",
@@ -38950,7 +38956,7 @@ var render = function() {
             {
               key: note.id,
               staticClass:
-                "listItem p-3 flex flex-col relative hover:bg-gray-200 cursor-pointer transitionItem",
+                "listItem px-5 py-3 flex flex-col relative hover:bg-gray-200 bg-white cursor-pointer transitionItem",
               class:
                 _vm.noteEdit && note.id === _vm.noteEdit.id
                   ? "bg-orange-300 hover:bg-orange-400"
@@ -38966,7 +38972,9 @@ var render = function() {
                 _vm._v(_vm._s(_vm._f("moment")(note.updated_at, "calendar")))
               ]),
               _vm._v(" "),
-              _c("p", [_vm._v(_vm._s(note.content))]),
+              _c("p", { staticClass: "noteContent text-gray-700" }, [
+                _vm._v(_vm._s(note.content))
+              ]),
               _vm._v(" "),
               _c(
                 "button",

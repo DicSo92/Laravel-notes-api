@@ -103,6 +103,7 @@
 
 <style lang="scss">
     .notes {
+        border-top: 1px solid #dddddd;
     }
     .notesList {
         border-right: solid #dddddd 2px;
